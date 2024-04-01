@@ -1,0 +1,29 @@
+
+    To Ensure correct operations, ensure 'Total Questions Parsed' and 'Total Questions Missed' match ETC.
+    If they do not match, there is a parsing issues.  Please report this error, along with the which
+    student it incorrectly parsed.  Thank you, Brion.
+
+
+
+Test Parsed for Caden S. Williams 
+=======================================================================================================
+Incorrect Questions     :  13
+Grade                   :  69
+Total Questions Parsed  :  42 (42 expected)
+=======================================================================================================
+		Objective: 3. 1 --> 2
+		Objective: 3. 2 --> 2
+		Objective: 3. 3 --> 1
+		Objective: 3. 4 --> 2
+		Objective: 3. 5 --> 2
+		Objective: 3. 6 --> 1
+		Objective: 3. 7 --> 0
+		Objective: 3. 8 --> 0
+		Objective: 3. 9 --> 0
+		Objective: 3.10 --> 0
+		Objective: 3.11 --> 1
+		Objective: 3.12 --> 1
+		Objective: 3.13 --> 1
+
+ Total Questions Missed  : 13
+ =======================================================================================================
