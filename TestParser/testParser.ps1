@@ -1,7 +1,7 @@
 ﻿
 <#
     Author:  Brion Lang
-    Version:  v0.1.0-dev.2
+    Version:  v0.1.0-dev.3
 
     versioning specification : https://semver.org/
 
@@ -30,7 +30,7 @@ clear-host
 #Creates a log file from this run.
 Start-Transcript -path "./lastrun.log"
 #For debugging information make sure this lines below is uncommented.
-$DebugPreference = 'continue' #"Inquire" # change to "Continue" to not halt on debugging messages
+$DebugPreference = 'Inquire' #"Inquire" # change to "Continue" to not halt on debugging messages
 $VerbosePreference = "Continue" # uncomment to see real detailed debugging messages.
 
 #Used to test if conf file loading/parsing is working.
@@ -45,7 +45,7 @@ write-debug "Set Configuration by mod#..."
 $modNumber = 0  #Module number to load configuration for
 while ( $True ) {
 	$modNumber = [int]( Read-host "Enter your Mod (3 or 10): " )
-	if ( $modNumber -eq 3 <#-or $modNumber -eq 10 #> ) { # removed for testing.
+	if ( $modNumber -eq 3 -or $modNumber -eq 10  ) {
 		break
 	} else {
 		write-host "Invalid response MUST be either '3' or '10'" -foreground "RED" 
@@ -62,7 +62,7 @@ if ( $loadingFromConf -eq $true ) {
 	$mod = 0
 	$htmlDirStr = ".\Mod$modNumber\Html_Files"
 	$saveDirStr = ".\Mod_$modNumber\Output_Files"
-	$objRegexPattern = ""#"Objectives?:?[Â\W]+(\d+)\.(\d+)\.?(\d+)?" # Default for Mod 3/ 10
+	$objRegexPattern = ""#"Objectives?:?[\W]+(\d+)\.(\d+)\.?(\d+)?" # Default for Mod 3/ 10
 	$nameRegexPattern = 'class=""\s*>((\w+[\. ]*){2,})<\/a><\/td><\/tr><tr><th class="cell" scope="row">Started on' #default for 3/10
 	$endOfQuestionRegexPattern = "<thead>"
 	# Used the "<thead>" tag to stop a questions parsing.  This tag is used on the 'history' of the saving of the question.
@@ -72,7 +72,7 @@ if ( $loadingFromConf -eq $true ) {
 	$maxNumOfQuestions = 0
 	$objectiveStrings = @()
 	
-	$confFileStr = "./mod$modNumber.conf"	
+	$confFileStr = "./config/mod$modNumber.conf"	
 	$valueLineRegex = "^\s*([a-zA-Z_]\w+)\s*=\s*((['`"])?.+\3?)$" #used for configuration files
 	
 	write-debug "Getting configuration file data"
@@ -220,7 +220,7 @@ foreach ( $fileParsingObj in $filesToParseObjs ){
                 Write-verbose "Question is INCORRECT."
                 $missedQuestions += $questionStr
                 $objStr = $questionStr | select-string -pattern $objRegexPattern
-                $objNum = [int]($objStr.Matches[0].groups[1].value)  #Capture Group 1 -- Objective number
+                $objNum = [int]($objStr.Matches[0].groups[2].value)  #Capture Group 1 -- Objective number
                 $objTallies[ $objNum-1 ] += 1;
 				
 			}
@@ -356,4 +356,7 @@ Write-Debug "If you see this --- opps"
 
 
 Sheet title = <lastname>
+
+WingDings 168 - box
+Winddings 254 - box w/check
 #>
