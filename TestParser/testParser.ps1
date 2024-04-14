@@ -30,12 +30,8 @@ clear-host
 #Creates a log file from this run.
 Start-Transcript -path "./lastrun.log"
 #For debugging information make sure this lines below is uncommented.
-$DebugPreference = 'Inquire' #"Inquire" # change to "Continue" to not halt on debugging messages
+$DebugPreference = "Continue" # "Inquire" # change to "Continue" to not halt on debugging messages
 $VerbosePreference = "Continue" # uncomment to see real detailed debugging messages.
-
-#Used to test if conf file loading/parsing is working.
-$loadingFromConf = $true
-
 
 Write-Debug "Debugging....."
 #=======================================================================================================
@@ -52,80 +48,84 @@ while ( $True ) {
 	}
 }
 #=======================================================================================================
-#Read Configuration File -- must be moved below the choise of which mod to process.
+#Read Configuration File
 #=======================================================================================================
+Write-Debug "Loading from configuration file"
+# variables that can be loaded are set to default values	
+# values loaded from the configuration file will be checked to see if they are spelled 
+# correctly using these preset variables
+<# Below are the directories and regex patterns that should only be changed in conf
+files due to special cases.  #>
+$htmlDirStr = ".\Html_Files"
+$saveDirStr = ".\Output_Files"  # Should be the directory were remediation files are stored.  Next version???
+$objRegexPattern = "Objective[s:\W]+(\d+)\.(\d+)\.?(\d+)?" # Default for Mod 3/ 10 hopefully all mods....
+# nameRegexPattern is from the ETC HTML and should be universial.
+$nameRegexPattern = 'class=""\s*>((\w+[\. ]*){2,})<\/a><\/td><\/tr><tr><th class="cell" scope="row">Started on' #default from ETC HTML
+$endOfQuestionRegexPattern = "<thead>"
+# Used the "<thead>" tag to stop a questions parsing.  This tag is used on the 'history' of the saving of the question.
+# This tag is only one right after a question in the HTML code and not found else place in the HTML code.
 
-if ( $loadingFromConf -eq $true ) {
-	Write-Debug "Loading from configuration file"
-#variables that can be loaded are set to default values	
-#values loaded from the configuration file will be checked to see if they are spelled correctly using these preset variables
-	$mod = 0
-	$htmlDirStr = ".\Mod$modNumber\Html_Files"
-	$saveDirStr = ".\Mod_$modNumber\Output_Files"
-	$objRegexPattern = ""#"Objectives?:?[\W]+(\d+)\.(\d+)\.?(\d+)?" # Default for Mod 3/ 10
-	$nameRegexPattern = 'class=""\s*>((\w+[\. ]*){2,})<\/a><\/td><\/tr><tr><th class="cell" scope="row">Started on' #default for 3/10
-	$endOfQuestionRegexPattern = "<thead>"
-	# Used the "<thead>" tag to stop a questions parsing.  This tag is used on the 'history' of the saving of the question.
-	# This tag is only one right after a question in the HTML code and not found else place in the HTML code.
-	$numOfObj = 0
-	$numOfDays = 0
-	$maxNumOfQuestions = 0
-	$objectiveStrings = @()
-	
-	$confFileStr = "./config/mod$modNumber.conf"	
-	$valueLineRegex = "^\s*([a-zA-Z_]\w+)\s*=\s*((['`"])?.+\3?)$" #used for configuration files
-	
-	write-debug "Getting configuration file data"
-	$confFileContent = get-content $confFileStr
-	if ( $confFileContent.count -gt 0 ) {
-		write-debug "File loaded, parsing for $modNumber"
-		$readingObj = $false
-		$currLineNum = 0
-		foreach ( $line in $confFileContent ) {
-			$currLineNum += 1
-			if ( $line -match "^#" ) {
-				write-verbose "$currLineNum - COMMENT - $line"
-				continue
-			}
-			elseif ( $line -match $valueLineRegex -and -not $readingObj ) {
-				write-verbose "$currLineNum - VARIABLE - $line"
-				$varName = $matches.1
-				$varData = $matches.2
-				if ( test-path -path "variable:$varName" ) {
-					# add 'Â' to the unwanted characters as moodle likes to add that character
-					if ( $varName -eq "objRegexPattern" ) {
-						$varData = $varData.insert(($varData.indexOf([char]'['))+1,[char]194)
-					}
-					write-verbose "Set $varName to $varData"
-					set-variable -name $varName -value $varData
-				}
-				else {
-					write-output "$varName variable is not a reconized variable!"
-					write-verbose "Error!!!!! with setting $varName to $varData" 
-				}
-			}
-			elseif ( $line -eq "<Objectives>" ) {
-				write-verbose "$currLineNum - $line"
-				$readingObj = $True
-			}
-			elseif ( $line -eq "</Objectives>" ) {
-				write-verbose "$currLineNum - $line"
-				$readingObj = $false
-			}
-			elseif ( $readingObj ) {
-				write-verbose "$currLineNum - $line"
-				$objectiveStrings += $line
+
+$mod = 0
+$numOfObj = 0
+$numOfDays = 0
+$maxNumOfQuestions = 0
+$objectiveStrings = @()
+
+$confFileStr = "./config/mod$modNumber.conf"	
+$valueLineRegex = "^\s*([a-zA-Z_]\w+)\s*=\s*((['`"])?.+\3?)$" #used for configuration files
+
+write-debug "Getting configuration file data"
+$confFileContent = get-content $confFileStr
+if ( $confFileContent.count -gt 0 ) {
+	write-debug "File loaded, parsing for $modNumber"
+	$readingObj = $false
+	$currLineNum = 0
+	foreach ( $line in $confFileContent ) {
+		$currLineNum += 1
+		if ( $line -match "^#" ) {
+			write-verbose "$currLineNum - COMMENT - $line"
+			continue
+		}
+		elseif ( $line -match $valueLineRegex -and -not $readingObj ) {
+			write-verbose "$currLineNum - VARIABLE - $line"
+			$varName = $matches.1
+			$varData = $matches.2
+			#Use test-path to see if the variable exists and then set the value
+			#else just going to ignore the variable loaded in.
+			if ( test-path -path "variable:$varName" ) {
+				write-verbose "Set $varName to $varData"
+				set-variable -name $varName -value $varData
 			}
 			else {
-				write-output "$currLineNum - $line was not parsed!"
-				write-verbose "$currLineNum - Error!!!!! with Parsing $line"
+				write-host -Forground Yellow "$varName variable is not a reconized variable!"
+				write-verbose "Error!!!!! with setting $varName to $varData" 
 			}
 		}
-	} else {
-		write-warning "Error loading configuration file.  Using default values."
+		elseif ( $line -eq "<Objectives>" ) {
+			write-verbose "$currLineNum - $line"
+			$readingObj = $True
+		}
+		elseif ( $line -eq "</Objectives>" ) {
+			write-verbose "$currLineNum - $line"
+			$readingObj = $false
+		}
+		elseif ( $readingObj ) {
+			write-verbose "$currLineNum - $line"
+			$objectiveStrings += $line
+		}
+		else {
+			write-output "$currLineNum - $line was not parsed!"
+			write-verbose "$currLineNum - Error!!!!! with Parsing $line"
+		}
 	}
-	write-debug "Parsed a total of $currLineNum"	
+} else {
+	write-warning "Error loading configuration file.  Using default values."
 }
+write-debug "Parsed a total of $currLineNum"	
+
+
+
 write-Debug "List of current variables settings:"
 if ( $DebugPreference -ne "SilentlyContinue"  ){
 	$oldPreference = $DebugPreference
@@ -200,6 +200,7 @@ foreach ( $fileParsingObj in $filesToParseObjs ){
 	$numOfFoundQuestions = 0 # used for debugging
     #read in each line and parse it into a question....
     foreach ( $line in $htmlFileContent) {
+		$line = $line.replace(""+[char]194,"").replace("&nbsp;"," ")
         $fileLineCount += 1
         #Write-Debug "Line: $fileLineCount"
         # Uses the HTML code to find the student's name based on the $nameRegexPattern
@@ -220,9 +221,14 @@ foreach ( $fileParsingObj in $filesToParseObjs ){
                 Write-verbose "Question is INCORRECT."
                 $missedQuestions += $questionStr
                 $objStr = $questionStr | select-string -pattern $objRegexPattern
-                $objNum = [int]($objStr.Matches[0].groups[2].value)  #Capture Group 1 -- Objective number
+                $objNum = [int]($objStr.Matches[0].groups[2].value)  #Capture Group 2 -- Objective number
                 $objTallies[ $objNum-1 ] += 1;
-				
+                # check if this is the wrong mod and move to next file if true
+                if ( [int]($objStr.Matches[0].groups[1].value) -ne $modNumber ) {
+                    write-debug "$modNumber found!!!!!!!!!!!!!!!!!!"
+                    $wrongMod = $true
+                    break;
+                }
 			}
 			Write-verbose "$fileLineCount-->`t`tEnd of question:  $($missedQuestions.count) of $numOfFoundQuestions :  Lines = $questionLineCount"
 			$questionStr = ""
@@ -242,6 +248,12 @@ foreach ( $fileParsingObj in $filesToParseObjs ){
     write-verbose "Total Questions parsed: $numOfFoundQuestions"
     write-verbose "Total Questions wrong: $($missedQuestions.count)"
     
+    if ( $wrongMod ) {
+        Write-Debug "$fileParsingObj is not current from the current parsing mod and has been skipped."
+        $wrongMod = $false
+        continue
+    }
+
 	# Build the output string
 	write-debug "Done with parshing $fileParsingObj now building output strings"
 	$excelStr = '"# Missed" ,' + ($missedQuestions.count) + ',"Student Name: ' + $nameStr + '"' + "`n`n"
@@ -269,15 +281,22 @@ Total Questions Parsed  :  $numOfFoundQuestions ($maxNumOfQuestions expected)
     $totalnumOfMissedQuestions = 0
     foreach ( $objTally in $objTallies ) {
         $totalnumOfMissedQuestions +=  $objTally;
+        # The checkbox for missed objectives!
+        if ( $objTally -eq 0 ) {
+            $wingDingChar = 168
+        }
+        else {
+            $wingDingChar = 254
+        }
         if ( $curObjNum -gt 9 ) {
             $outputStr += "$objOutputStr$modNumber.$curObjNum --> $objTally`n"
             $csvStr += "$objTally`n"
-			$excelStr += [string]$objTally + ',,"' + $curObjNum + ".  " + $objectiveStrings[$curObjNum-1] + '",'+"`n"
+			$excelStr += [string]$objTally + ','+[char]$wingDingChar+',"' + $curObjNum + ".  " + $objectiveStrings[$curObjNum-1] + '",'+"`n"
         }
         else {
             $outputStr += "$objOutputStr$modNumber. $curObjNum --> $objTally`n"
             $csvStr += "$objTally`n"
-			$excelStr += [string]$objTally + ',,"' + $curObjNum + ".   " + $objectiveStrings[$curObjNum-1] + '",'+"`n"
+			$excelStr += [string]$objTally + ','+[char]$wingDingChar+',"' + $curObjNum + ".   " + $objectiveStrings[$curObjNum-1] + '",'+"`n"
         }
         $curObjNum += 1;
     }
@@ -299,7 +318,8 @@ Total Questions Parsed  :  $numOfFoundQuestions ($maxNumOfQuestions expected)
         write-Host "Error!"
         Write-Error "Unknown error while trying to save file: $saveDirStr/$namestr.txt"
     }
-    try {
+# Section below removed due to Excel output.
+<#    try {
         Write-host "Creating file '$saveDirStr/$namestr.csv' and saving ..... " -nonewline
         new-item -Path $saveDirStr -Name "$nameStr.csv" -Force 1> $null
         Set-Content -Path "$saveDirStr/$namestr.csv" -Value $csvstr
@@ -310,12 +330,14 @@ Total Questions Parsed  :  $numOfFoundQuestions ($maxNumOfQuestions expected)
         write-Host "Error!"
         Write-Error "Unknown error while trying to save file: $saveDirStr/$namestr.csv"
     }
+#>
 	try {
         Write-host "Creating file '$saveDirStr/$namestr.xlsx' and saving ..... " -nonewline
-		write-host "`n$excelStr"
-		$excelStr | export-csv "$saveDirStr/${namestr}_test.csv"
-		$excelStr | Set-content -path "$saveDirStr/${namestr}_test.test"
-       (ConvertFrom-Csv $excelStr) | export-Excel "$saveDirStr/$namestr.xlsx" -autosize
+        $excel = ( (ConvertFrom-Csv $excelStr) | export-Excel "$saveDirStr/$namestr.xlsx"  -autosize -PassThru )
+        $Range = "B2:B$($numOfObj+1)"
+        Set-excelRange -range $range  -Worksheet $excel.sheet1 -FontName "wingdings"
+        Set-ExcelRange -range "A1:B$($numOfObj+1)" -Worksheet $excel.Sheet1 -HorizontalAlignment Center
+        Export-Excel -ExcelPackage $excel
         write-verbose "Excel File saved correctly."
         write-host "Succesful!"
     }
@@ -323,14 +345,15 @@ Total Questions Parsed  :  $numOfFoundQuestions ($maxNumOfQuestions expected)
         write-Host "Error!"
         Write-Error "Unknown error while trying to save file: $saveDirStr/$namestr.xlsx"
     }
-    Write-verbose "Checking for common count errors due to bad parsing."
 
+    
     #Checking for Errors Will Robinson!
+    Write-verbose "Checking for common count errors due to bad parsing."
     if ( $maxNumOfQuestions -ne $numOfFoundQuestions ) {
-        Write-Error "maxNumOfQuestions of questions expected but parsed $numOfFoundQuestions Questions!"
+        Write-Error "$maxNumOfQuestions of questions expected but parsed $numOfFoundQuestions Questions!"
     }
     if ( $totalnumOfMissedQuestions -ne $missedQuestions.count ) {
-        Write-Error "$total missed questions by objectives buy parsed $($missedQuestions.count) Questions!"
+        Write-Error "$totalnumOfMissedQuestions missed questions by objectives but parsed $($missedQuestions.count) Questions!"
     }
 	write-debug "Done with $fileParsingObj"
 }

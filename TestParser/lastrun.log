@@ -1,16 +1,16 @@
 ﻿**********************
 Windows PowerShell transcript start
-Start time: 20240409121139
+Start time: 20240414021320
 Username: DELL_BRI\ewone
 RunAs User: DELL_BRI\ewone
 Configuration Name: 
 Machine: DELL_BRI (Microsoft Windows NT 10.0.19045.0)
-Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -Command if((Get-ExecutionPolicy ) -ne 'AllSigned') { Set-ExecutionPolicy -Scope Process Bypass }; & 'D:\projects\TestParser\ETC-Test-Parser\TestParser\testParser.ps1'
-Process ID: 23032
-PSVersion: 5.1.19041.4170
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell_ise.exe D:\projects\TestParser\ETC-Test-Parser\TestParser\testParser.ps1
+Process ID: 14384
+PSVersion: 5.1.19041.4291
 PSEdition: Desktop
-PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.4170
-BuildVersion: 10.0.19041.4170
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.4291
+BuildVersion: 10.0.19041.4291
 CLRVersion: 4.0.30319.42000
 WSManStackVersion: 3.0
 PSRemotingProtocolVersion: 2.3
@@ -18,31 +18,10 @@ SerializationVersion: 1.1.0.1
 **********************
 Transcript started, output file is ./lastrun.log
 DEBUG: Debugging.....
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
 DEBUG: Set Configuration by mod#...
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
-Invalid response MUST be either '3' or '10'
 DEBUG: Loading from configuration file
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
 DEBUG: Getting configuration file data
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
-DEBUG: File loaded, parsing for 10
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
+DEBUG: File loaded, parsing for 3
 VERBOSE: 1 - COMMENT - ####################################################################################################################################################################
 VERBOSE: 2 - COMMENT - #
 VERBOSE: 3 - COMMENT - # Configuration file for TestParser.ps1
@@ -107,461 +86,99 @@ VERBOSE: 61 - COMMENT - #
 VERBOSE: 62 - COMMENT - # If either numOfObj or maxNumOfQuestions are zero (0), program will exit without parsing.
 VERBOSE: 63 - COMMENT - #
 VERBOSE: 64 - COMMENT - ####################################################################################################################################################################
-VERBOSE: 65 - VARIABLE - mod = 10
-VERBOSE: Set mod to 10
-VERBOSE: 66 - VARIABLE - objRegexPattern = Objectives?:?[\W]+(\d+)\.(\d+)\.?(\d+)?
-VERBOSE: Set objRegexPattern to Objectives?:?[Â\W]+(\d+)\.(\d+)\.?(\d+)?
-VERBOSE: 67 - VARIABLE - nameRegexPattern = class=""\s*>((\w+[\. ]*){2,})<\/a><\/td><\/tr><tr><th class="cell" scope="row">Started on
-VERBOSE: Set nameRegexPattern to class=""\s*>((\w+[\. ]*){2,})<\/a><\/td><\/tr><tr><th class="cell" scope="row">Started on
-VERBOSE: 68 - VARIABLE - endOfQuestionRegexPattern = <thead>
-VERBOSE: Set endOfQuestionRegexPattern to <thead>
+VERBOSE: 65 - VARIABLE - mod = 3
+VERBOSE: Set mod to 3
+VERBOSE: 66 - COMMENT - #objRegexPattern = Objectives?:?[\W]+(\d+)\.(\d+)\.?(\d+)?
+VERBOSE: 67 - COMMENT - #nameRegexPattern = class=""\s*>((\w+[\. ]*){2,})<\/a><\/td><\/tr><tr><th class="cell" scope="row">Started on
+VERBOSE: 68 - COMMENT - #endOfQuestionRegexPattern = <thead>
 VERBOSE: 69 - VARIABLE - numOfObj = 13
 VERBOSE: Set numOfObj to 13
-VERBOSE: 70 - VARIABLE - numOfDays = 8
-VERBOSE: Set numOfDays to 8
-VERBOSE: 71 - VARIABLE - maxNumOfQuestions = 35
-VERBOSE: Set maxNumOfQuestions to 35
+VERBOSE: 70 - VARIABLE - numOfDays = 9
+VERBOSE: Set numOfDays to 9
+VERBOSE: 71 - VARIABLE - maxNumOfQuestions = 42
+VERBOSE: Set maxNumOfQuestions to 42
 VERBOSE: 72 - COMMENT - #Test Directories
-VERBOSE: 73 - COMMENT - #htmlDirStr = .\Mod10\Html_Files
-VERBOSE: 74 - COMMENT - #saveDirStr = .\Mod10\Output_Files
+VERBOSE: 73 - COMMENT - #htmlDirStr = .\Mod3\Html_Files
+VERBOSE: 74 - COMMENT - #saveDirStr = .\Mod3\Output_Files
 VERBOSE: 75 - <objectives>
-VERBOSE: 76 - M10 Obj01
-VERBOSE: 77 - M10 Obj02
-VERBOSE: 78 - M10 Obj03
-VERBOSE: 79 - M10 Obj04
-VERBOSE: 80 - M10 Obj05
-VERBOSE: 81 - M10 Obj06
-VERBOSE: 82 - M10 Obj07
-VERBOSE: 83 - M10 Obj08
-VERBOSE: 84 - M10 Obj09
-VERBOSE: 85 - M10 Obj10
-VERBOSE: 86 - M10 Obj11
-VERBOSE: 87 - </objectives>
-DEBUG: Parsed a total of 87
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
+VERBOSE: 76 - Create unstructured programs using fundamental concepts.
+VERBOSE: 77 - Discuss importance of programming history and its origins.
+VERBOSE: 78 - Identify different language tiers and types of programming languages.
+VERBOSE: 79 - Identify and use programming structural components.
+VERBOSE: 80 - Apply the correct programming data types.
+VERBOSE: 81 - Create procedural programs using fundamental concepts.
+VERBOSE: 82 - Explain object-oriented programming concepts.
+VERBOSE: 83 - Create, analyze, and compile simple C++ programs.
+VERBOSE: 84 - Create object-oriented programs using fundamental concepts.
+VERBOSE: 85 - Read and understand intermediate level C++ programs and trace execution path.
+VERBOSE: 86 - Describe the Software Development Life Cycle.
+VERBOSE: 87 - Describe the relationship between software programs and the OS.
+VERBOSE: 88 - Design, develop, and use Regular Expressions in a compiled program.
+VERBOSE: 89 - </objectives>
+DEBUG: Parsed a total of 89
 DEBUG: List of current variables settings:
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
 DEBUG: 
 
-$mod = 10
-DEBUG: $htmlDirStr = .\Mod10\Html_Files
-DEBUG: $saveDirStr = .\Mod_10\Output_Files
-DEBUG: $objRegexPattern = Objectives?:?[Â\W]+(\d+)\.(\d+)\.?(\d+)?
+$mod = 3
+DEBUG: $htmlDirStr = .\Html_Files
+DEBUG: $saveDirStr = .\Output_Files
+DEBUG: $objRegexPattern = Objective[s:\W]+(\d+)\.(\d+)\.?(\d+)?
 DEBUG: $nameRegexPattern = class=""\s*>((\w+[\. ]*){2,})<\/a><\/td><\/tr><tr><th class="cell" scope="row">Started on
 DEBUG: $endOfQuestionRegexPattern = <thead>
 DEBUG: $numOfObj = 13
-DEBUG: $numOfDays = 8
-DEBUG: $maxNumOfQuestions = 35
-DEBUG: $objectiveStrings = M10 Obj01 M10 Obj02 M10 Obj03 M10 Obj04 M10 Obj05 M10 Obj06 M10 Obj07 M10 Obj08 M10 Obj09 M10 Obj10 M10 Obj11
+DEBUG: $numOfDays = 9
+DEBUG: $maxNumOfQuestions = 42
+DEBUG: $objectiveStrings = Create unstructured programs using fundamental concepts.  Discuss importance of programming history and its origins.  Identify different language tiers and types of programming languages.  Identify and use programming structural components.  Apply the correct programming data types.  Create procedural programs using fundamental concepts.  Explain object-oriented programming concepts.  Create, analyze, and compile simple C++ programs.  Create object-oriented programs using fundamental concepts.  Read and understand intermediate level C++ programs and trace execution path.  Describe the Software Development Life Cycle.  Describe the relationship between software programs and the OS.  Design, develop, and use Regular Expressions in a compiled program.
 DEBUG: Done!
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
-VERBOSE: $objRegexPattern is Objectives?:?[Â\W]+(\d+)\.(\d+)\.?(\d+)?
+VERBOSE: $objRegexPattern is Objective[s:\W]+(\d+)\.(\d+)\.?(\d+)?
 VERBOSE: $nameRegexPattern is class=""\s*>((\w+[\. ]*){2,})<\/a><\/td><\/tr><tr><th class="cell" scope="row">Started on
 VERBOSE: $endOfQuestionRegexPattern is <thead>
 VERBOSE: $objOutputStr is 		Objective:
 DEBUG: Getting files....
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
-VERBOSE: lewis.htm review9_1.htm review9_2.htm review9_3.htm to process....
-DEBUG: Processing D:\projects\TestParser\ETC-Test-Parser\TestParser\Mod10\Html_Files\lewis.htm
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
+VERBOSE: lewis.htm review9_1.htm review9_2.htm review9_3.htm reviewMod3_1.htm reviewMod3_2.htm reviewMod3_3.html to process....
+DEBUG: Processing D:\projects\TestParser\ETC-Test-Parser\TestParser\Html_Files\lewis.htm
 VERBOSE: Creating tally array:
 VERBOSE: 13 sized arrry set to : 0 0 0 0 0 0 0 0 0 0 0 0 0
-VERBOSE: Getting file .\Mod10\Html_Files/lewis.htm :
+VERBOSE: Getting file .\Html_Files/lewis.htm :
 VERBOSE: Processing a question
 VERBOSE: 68 -->		Found the name:  Torrey E. Lewis
 VERBOSE: Question is INCORRECT.
-VERBOSE: 75-->		End of question:  1 of 1 :  Lines = 73
-VERBOSE: 121-->		End of question:  1 of 2 :  Lines = 45
-VERBOSE: 161-->		End of question:  1 of 3 :  Lines = 39
-VERBOSE: 204-->		End of question:  1 of 4 :  Lines = 42
-VERBOSE: 240-->		End of question:  1 of 5 :  Lines = 35
-VERBOSE: 280-->		End of question:  1 of 6 :  Lines = 39
-VERBOSE: 322-->		End of question:  1 of 7 :  Lines = 41
-VERBOSE: 365-->		End of question:  1 of 8 :  Lines = 42
-VERBOSE: 407-->		End of question:  1 of 9 :  Lines = 41
-VERBOSE: 448-->		End of question:  1 of 10 :  Lines = 40
-VERBOSE: 488-->		End of question:  1 of 11 :  Lines = 39
-VERBOSE: Question is INCORRECT.
-VERBOSE: 524-->		End of question:  2 of 12 :  Lines = 35
-VERBOSE: 565-->		End of question:  2 of 13 :  Lines = 40
-VERBOSE: Question is INCORRECT.
-VERBOSE: 606-->		End of question:  3 of 14 :  Lines = 40
-VERBOSE: 648-->		End of question:  3 of 15 :  Lines = 41
-VERBOSE: Question is INCORRECT.
-VERBOSE: 688-->		End of question:  4 of 16 :  Lines = 39
-VERBOSE: 728-->		End of question:  4 of 17 :  Lines = 39
-VERBOSE: Question is INCORRECT.
-VERBOSE: 764-->		End of question:  5 of 18 :  Lines = 35
-VERBOSE: 803-->		End of question:  5 of 19 :  Lines = 38
-VERBOSE: 843-->		End of question:  5 of 20 :  Lines = 39
-VERBOSE: 883-->		End of question:  5 of 21 :  Lines = 39
-VERBOSE: 923-->		End of question:  5 of 22 :  Lines = 39
-VERBOSE: 963-->		End of question:  5 of 23 :  Lines = 39
-VERBOSE: 1003-->		End of question:  5 of 24 :  Lines = 39
-VERBOSE: 1043-->		End of question:  5 of 25 :  Lines = 39
-VERBOSE: 1079-->		End of question:  5 of 26 :  Lines = 35
-VERBOSE: 1119-->		End of question:  5 of 27 :  Lines = 39
-VERBOSE: Question is INCORRECT.
-VERBOSE: 1161-->		End of question:  6 of 28 :  Lines = 41
-VERBOSE: 1202-->		End of question:  6 of 29 :  Lines = 40
-VERBOSE: Question is INCORRECT.
-VERBOSE: 1243-->		End of question:  7 of 30 :  Lines = 40
-VERBOSE: Question is INCORRECT.
-VERBOSE: 1286-->		End of question:  8 of 31 :  Lines = 42
-VERBOSE: 1326-->		End of question:  8 of 32 :  Lines = 39
-VERBOSE: 1366-->		End of question:  8 of 33 :  Lines = 39
-VERBOSE: 1407-->		End of question:  8 of 34 :  Lines = 40
-VERBOSE: Question is INCORRECT.
-VERBOSE: 1450-->		End of question:  9 of 35 :  Lines = 42
-VERBOSE: Found all the questions, exiting loop
-VERBOSE: Total Lines parsed: 1450
-VERBOSE: Total Questions parsed: 35
-VERBOSE: Total Questions wrong: 9
-DEBUG: Done with parshing lewis.htm now building output strings
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
-
-    To Ensure correct operations, ensure 'Total Questions Parsed' and 'Total Questions Missed' match ETC.
-    If they do not match, there is a parsing issues.  Please report this error, along with the which
-    student it incorrectly parsed.  Thank you, Brion.
-
-
-
-Test Parsed for Torrey E. Lewis 
-=======================================================================================================
-Incorrect Questions     :  9
-Grade                   :  74
-Total Questions Parsed  :  35 (35 expected)
-=======================================================================================================
-		Objective: 10. 1 --> 0
-		Objective: 10. 2 --> 0
-		Objective: 10. 3 --> 1
-		Objective: 10. 4 --> 0
-		Objective: 10. 5 --> 1
-		Objective: 10. 6 --> 1
-		Objective: 10. 7 --> 1
-		Objective: 10. 8 --> 0
-		Objective: 10. 9 --> 2
-		Objective: 10.10 --> 2
-		Objective: 10.11 --> 1
-		Objective: 10.12 --> 0
-		Objective: 10.13 --> 0
-
- Total Questions Missed  : 9
- =======================================================================================================
-Creating file '.\Mod_10\Output_Files/Torrey E. Lewis.txt' and saving .....
-VERBOSE: TEXT File saved correctly.
-Succesful!
-Creating file '.\Mod_10\Output_Files/Torrey E. Lewis.csv' and saving .....
-VERBOSE: CSV File saved correctly.
-Succesful!
-Creating file '.\Mod_10\Output_Files/Torrey E. Lewis.xlsx' and saving .....
-
-"# Missed" ,9,"Student Name: Torrey E. Lewis"
-
-0,,"1.   M10 Obj01",
-0,,"2.   M10 Obj02",
-1,,"3.   M10 Obj03",
-0,,"4.   M10 Obj04",
-1,,"5.   M10 Obj05",
-1,,"6.   M10 Obj06",
-1,,"7.   M10 Obj07",
-0,,"8.   M10 Obj08",
-2,,"9.   M10 Obj09",
-2,,"10.  M10 Obj10",
-1,,"11.  M10 Obj11",
-0,,"12.  ",
-0,,"13.  ",
-VERBOSE: Excel File saved correctly.
-Succesful!
-VERBOSE: Checking for common count errors due to bad parsing.
-DEBUG: Done with lewis.htm
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
-DEBUG: Processing D:\projects\TestParser\ETC-Test-Parser\TestParser\Mod10\Html_Files\review9_1.htm
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
+DEBUG: 3 found!!!!!!!!!!!!!!!!!!
+VERBOSE: Total Lines parsed: 75
+VERBOSE: Total Questions parsed: 1
+VERBOSE: Total Questions wrong: 1
+DEBUG: lewis.htm is not current from the current parsing mod and has been skipped.
+DEBUG: Processing D:\projects\TestParser\ETC-Test-Parser\TestParser\Html_Files\review9_1.htm
 VERBOSE: Creating tally array:
 VERBOSE: 13 sized arrry set to : 0 0 0 0 0 0 0 0 0 0 0 0 0
-VERBOSE: Getting file .\Mod10\Html_Files/review9_1.htm :
+VERBOSE: Getting file .\Html_Files/review9_1.htm :
 VERBOSE: Processing a question
 VERBOSE: 68 -->		Found the name:  Review Mod 9 1
 VERBOSE: 76-->		End of question:  0 of 1 :  Lines = 74
 VERBOSE: Question is INCORRECT.
-VERBOSE: 116-->		End of question:  1 of 2 :  Lines = 39
-VERBOSE: 156-->		End of question:  1 of 3 :  Lines = 39
-VERBOSE: Question is INCORRECT.
-VERBOSE: 196-->		End of question:  2 of 4 :  Lines = 39
-VERBOSE: 236-->		End of question:  2 of 5 :  Lines = 39
-VERBOSE: Question is INCORRECT.
-VERBOSE: 279-->		End of question:  3 of 6 :  Lines = 42
-VERBOSE: 322-->		End of question:  3 of 7 :  Lines = 42
-VERBOSE: 362-->		End of question:  3 of 8 :  Lines = 39
-VERBOSE: Question is INCORRECT.
-VERBOSE: 404-->		End of question:  4 of 9 :  Lines = 41
-VERBOSE: Question is INCORRECT.
-VERBOSE: 443-->		End of question:  5 of 10 :  Lines = 38
-VERBOSE: 483-->		End of question:  5 of 11 :  Lines = 39
-VERBOSE: 523-->		End of question:  5 of 12 :  Lines = 39
-VERBOSE: 559-->		End of question:  5 of 13 :  Lines = 35
-VERBOSE: 598-->		End of question:  5 of 14 :  Lines = 38
-VERBOSE: Question is INCORRECT.
-VERBOSE: 639-->		End of question:  6 of 15 :  Lines = 40
-VERBOSE: Question is INCORRECT.
-VERBOSE: 682-->		End of question:  7 of 16 :  Lines = 42
-VERBOSE: 727-->		End of question:  7 of 17 :  Lines = 44
-VERBOSE: Question is INCORRECT.
-VERBOSE: 770-->		End of question:  8 of 18 :  Lines = 42
-VERBOSE: Question is INCORRECT.
-VERBOSE: 816-->		End of question:  9 of 19 :  Lines = 45
-VERBOSE: 858-->		End of question:  9 of 20 :  Lines = 41
-VERBOSE: Question is INCORRECT.
-VERBOSE: 898-->		End of question:  10 of 21 :  Lines = 39
-VERBOSE: Question is INCORRECT.
-VERBOSE: 936-->		End of question:  11 of 22 :  Lines = 37
-VERBOSE: Question is INCORRECT.
-VERBOSE: 975-->		End of question:  12 of 23 :  Lines = 38
-VERBOSE: Question is INCORRECT.
-VERBOSE: 1018-->		End of question:  13 of 24 :  Lines = 42
-VERBOSE: 1062-->		End of question:  13 of 25 :  Lines = 43
-VERBOSE: Question is INCORRECT.
-VERBOSE: 1102-->		End of question:  14 of 26 :  Lines = 39
-VERBOSE: Question is INCORRECT.
-VERBOSE: 1142-->		End of question:  15 of 27 :  Lines = 39
-VERBOSE: Question is INCORRECT.
-VERBOSE: 1182-->		End of question:  16 of 28 :  Lines = 39
-VERBOSE: 1223-->		End of question:  16 of 29 :  Lines = 40
-VERBOSE: Question is INCORRECT.
-VERBOSE: 1263-->		End of question:  17 of 30 :  Lines = 39
-VERBOSE: Question is INCORRECT.
-VERBOSE: 1304-->		End of question:  18 of 31 :  Lines = 40
-VERBOSE: 1344-->		End of question:  18 of 32 :  Lines = 39
-VERBOSE: Question is INCORRECT.
-VERBOSE: 1385-->		End of question:  19 of 33 :  Lines = 40
-VERBOSE: Question is INCORRECT.
-VERBOSE: 1425-->		End of question:  20 of 34 :  Lines = 39
-VERBOSE: Question is INCORRECT.
-VERBOSE: 1465-->		End of question:  21 of 35 :  Lines = 39
-VERBOSE: Found all the questions, exiting loop
-VERBOSE: Total Lines parsed: 1465
-VERBOSE: Total Questions parsed: 35
-VERBOSE: Total Questions wrong: 21
-DEBUG: Done with parshing review9_1.htm now building output strings
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
-
-    To Ensure correct operations, ensure 'Total Questions Parsed' and 'Total Questions Missed' match ETC.
-    If they do not match, there is a parsing issues.  Please report this error, along with the which
-    student it incorrectly parsed.  Thank you, Brion.
-
-
-
-Test Parsed for Review Mod 9 1 
-=======================================================================================================
-Incorrect Questions     :  21
-Grade                   :  40
-Total Questions Parsed  :  35 (35 expected)
-=======================================================================================================
-		Objective: 10. 1 --> 2
-		Objective: 10. 2 --> 3
-		Objective: 10. 3 --> 2
-		Objective: 10. 4 --> 2
-		Objective: 10. 5 --> 1
-		Objective: 10. 6 --> 3
-		Objective: 10. 7 --> 1
-		Objective: 10. 8 --> 1
-		Objective: 10. 9 --> 2
-		Objective: 10.10 --> 3
-		Objective: 10.11 --> 1
-		Objective: 10.12 --> 0
-		Objective: 10.13 --> 0
-
- Total Questions Missed  : 21
- =======================================================================================================
-Creating file '.\Mod_10\Output_Files/Review Mod 9 1.txt' and saving .....
-VERBOSE: TEXT File saved correctly.
-Succesful!
-Creating file '.\Mod_10\Output_Files/Review Mod 9 1.csv' and saving .....
-VERBOSE: CSV File saved correctly.
-Succesful!
-Creating file '.\Mod_10\Output_Files/Review Mod 9 1.xlsx' and saving .....
-
-"# Missed" ,21,"Student Name: Review Mod 9 1"
-
-2,,"1.   M10 Obj01",
-3,,"2.   M10 Obj02",
-2,,"3.   M10 Obj03",
-2,,"4.   M10 Obj04",
-1,,"5.   M10 Obj05",
-3,,"6.   M10 Obj06",
-1,,"7.   M10 Obj07",
-1,,"8.   M10 Obj08",
-2,,"9.   M10 Obj09",
-3,,"10.  M10 Obj10",
-1,,"11.  M10 Obj11",
-0,,"12.  ",
-0,,"13.  ",
-VERBOSE: Excel File saved correctly.
-Succesful!
-VERBOSE: Checking for common count errors due to bad parsing.
-DEBUG: Done with review9_1.htm
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
-DEBUG: Processing D:\projects\TestParser\ETC-Test-Parser\TestParser\Mod10\Html_Files\review9_2.htm
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
+DEBUG: 3 found!!!!!!!!!!!!!!!!!!
+VERBOSE: Total Lines parsed: 116
+VERBOSE: Total Questions parsed: 2
+VERBOSE: Total Questions wrong: 1
+DEBUG: review9_1.htm is not current from the current parsing mod and has been skipped.
+DEBUG: Processing D:\projects\TestParser\ETC-Test-Parser\TestParser\Html_Files\review9_2.htm
 VERBOSE: Creating tally array:
 VERBOSE: 13 sized arrry set to : 0 0 0 0 0 0 0 0 0 0 0 0 0
-VERBOSE: Getting file .\Mod10\Html_Files/review9_2.htm :
+VERBOSE: Getting file .\Html_Files/review9_2.htm :
 VERBOSE: Processing a question
 VERBOSE: 68 -->		Found the name:  Review Mod 9 2
 VERBOSE: 76-->		End of question:  0 of 1 :  Lines = 74
 VERBOSE: 116-->		End of question:  0 of 2 :  Lines = 39
 VERBOSE: Question is INCORRECT.
-VERBOSE: 158-->		End of question:  1 of 3 :  Lines = 41
-VERBOSE: 198-->		End of question:  1 of 4 :  Lines = 39
-VERBOSE: 238-->		End of question:  1 of 5 :  Lines = 39
-VERBOSE: 276-->		End of question:  1 of 6 :  Lines = 37
-VERBOSE: Question is INCORRECT.
-VERBOSE: 316-->		End of question:  2 of 7 :  Lines = 39
-VERBOSE: 362-->		End of question:  2 of 8 :  Lines = 45
-VERBOSE: 402-->		End of question:  2 of 9 :  Lines = 39
-VERBOSE: 442-->		End of question:  2 of 10 :  Lines = 39
-VERBOSE: 483-->		End of question:  2 of 11 :  Lines = 40
-VERBOSE: 523-->		End of question:  2 of 12 :  Lines = 39
-VERBOSE: Question is INCORRECT.
-VERBOSE: 563-->		End of question:  3 of 13 :  Lines = 39
-VERBOSE: 603-->		End of question:  3 of 14 :  Lines = 39
-VERBOSE: 643-->		End of question:  3 of 15 :  Lines = 39
-VERBOSE: 683-->		End of question:  3 of 16 :  Lines = 39
-VERBOSE: Question is INCORRECT.
-VERBOSE: 724-->		End of question:  4 of 17 :  Lines = 40
-VERBOSE: 766-->		End of question:  4 of 18 :  Lines = 41
-VERBOSE: 806-->		End of question:  4 of 19 :  Lines = 39
-VERBOSE: 847-->		End of question:  4 of 20 :  Lines = 40
-VERBOSE: 887-->		End of question:  4 of 21 :  Lines = 39
-VERBOSE: Question is INCORRECT.
-VERBOSE: 929-->		End of question:  5 of 22 :  Lines = 41
-VERBOSE: Question is INCORRECT.
-VERBOSE: 969-->		End of question:  6 of 23 :  Lines = 39
-VERBOSE: 1009-->		End of question:  6 of 24 :  Lines = 39
-VERBOSE: 1049-->		End of question:  6 of 25 :  Lines = 39
-VERBOSE: 1085-->		End of question:  6 of 26 :  Lines = 35
-VERBOSE: Question is INCORRECT.
-VERBOSE: 1127-->		End of question:  7 of 27 :  Lines = 41
-VERBOSE: Question is INCORRECT.
-VERBOSE: 1171-->		End of question:  8 of 28 :  Lines = 43
-VERBOSE: 1206-->		End of question:  8 of 29 :  Lines = 34
-VERBOSE: 1250-->		End of question:  8 of 30 :  Lines = 43
-VERBOSE: 1292-->		End of question:  8 of 31 :  Lines = 41
-VERBOSE: 1332-->		End of question:  8 of 32 :  Lines = 39
-VERBOSE: 1368-->		End of question:  8 of 33 :  Lines = 35
-VERBOSE: 1407-->		End of question:  8 of 34 :  Lines = 38
-VERBOSE: 1447-->		End of question:  8 of 35 :  Lines = 39
-VERBOSE: Found all the questions, exiting loop
-VERBOSE: Total Lines parsed: 1447
-VERBOSE: Total Questions parsed: 35
-VERBOSE: Total Questions wrong: 8
-DEBUG: Done with parshing review9_2.htm now building output strings
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
-
-    To Ensure correct operations, ensure 'Total Questions Parsed' and 'Total Questions Missed' match ETC.
-    If they do not match, there is a parsing issues.  Please report this error, along with the which
-    student it incorrectly parsed.  Thank you, Brion.
-
-
-
-Test Parsed for Review Mod 9 2 
-=======================================================================================================
-Incorrect Questions     :  8
-Grade                   :  77
-Total Questions Parsed  :  35 (35 expected)
-=======================================================================================================
-		Objective: 10. 1 --> 0
-		Objective: 10. 2 --> 0
-		Objective: 10. 3 --> 1
-		Objective: 10. 4 --> 2
-		Objective: 10. 5 --> 1
-		Objective: 10. 6 --> 1
-		Objective: 10. 7 --> 1
-		Objective: 10. 8 --> 0
-		Objective: 10. 9 --> 1
-		Objective: 10.10 --> 0
-		Objective: 10.11 --> 1
-		Objective: 10.12 --> 0
-		Objective: 10.13 --> 0
-
- Total Questions Missed  : 8
- =======================================================================================================
-Creating file '.\Mod_10\Output_Files/Review Mod 9 2.txt' and saving .....
-VERBOSE: TEXT File saved correctly.
-Succesful!
-Creating file '.\Mod_10\Output_Files/Review Mod 9 2.csv' and saving .....
-VERBOSE: CSV File saved correctly.
-Succesful!
-Creating file '.\Mod_10\Output_Files/Review Mod 9 2.xlsx' and saving .....
-
-"# Missed" ,8,"Student Name: Review Mod 9 2"
-
-0,,"1.   M10 Obj01",
-0,,"2.   M10 Obj02",
-1,,"3.   M10 Obj03",
-2,,"4.   M10 Obj04",
-1,,"5.   M10 Obj05",
-1,,"6.   M10 Obj06",
-1,,"7.   M10 Obj07",
-0,,"8.   M10 Obj08",
-1,,"9.   M10 Obj09",
-0,,"10.  M10 Obj10",
-1,,"11.  M10 Obj11",
-0,,"12.  ",
-0,,"13.  ",
-VERBOSE: Excel File saved correctly.
-Succesful!
-VERBOSE: Checking for common count errors due to bad parsing.
-DEBUG: Done with review9_2.htm
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
-DEBUG: Processing D:\projects\TestParser\ETC-Test-Parser\TestParser\Mod10\Html_Files\review9_3.htm
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
+DEBUG: 3 found!!!!!!!!!!!!!!!!!!
+VERBOSE: Total Lines parsed: 158
+VERBOSE: Total Questions parsed: 3
+VERBOSE: Total Questions wrong: 1
+DEBUG: review9_2.htm is not current from the current parsing mod and has been skipped.
+DEBUG: Processing D:\projects\TestParser\ETC-Test-Parser\TestParser\Html_Files\review9_3.htm
 VERBOSE: Creating tally array:
 VERBOSE: 13 sized arrry set to : 0 0 0 0 0 0 0 0 0 0 0 0 0
-VERBOSE: Getting file .\Mod10\Html_Files/review9_3.htm :
+VERBOSE: Getting file .\Html_Files/review9_3.htm :
 VERBOSE: Processing a question
 VERBOSE: 68 -->		Found the name:  Review Mod 9 3
 VERBOSE: 76-->		End of question:  0 of 1 :  Lines = 74
@@ -599,15 +216,10 @@ VERBOSE: 1340-->		End of question:  0 of 32 :  Lines = 44
 VERBOSE: 1383-->		End of question:  0 of 33 :  Lines = 42
 VERBOSE: 1419-->		End of question:  0 of 34 :  Lines = 35
 VERBOSE: 1459-->		End of question:  0 of 35 :  Lines = 39
-VERBOSE: Found all the questions, exiting loop
-VERBOSE: Total Lines parsed: 1459
+VERBOSE: Total Lines parsed: 2140
 VERBOSE: Total Questions parsed: 35
 VERBOSE: Total Questions wrong: 0
 DEBUG: Done with parshing review9_3.htm now building output strings
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
 
     To Ensure correct operations, ensure 'Total Questions Parsed' and 'Total Questions Missed' match ETC.
     If they do not match, there is a parsing issues.  Please report this error, along with the which
@@ -619,62 +231,389 @@ Test Parsed for Review Mod 9 3
 =======================================================================================================
 Incorrect Questions     :  0
 Grade                   :  100
-Total Questions Parsed  :  35 (35 expected)
+Total Questions Parsed  :  35 (42 expected)
 =======================================================================================================
-		Objective: 10. 1 --> 0
-		Objective: 10. 2 --> 0
-		Objective: 10. 3 --> 0
-		Objective: 10. 4 --> 0
-		Objective: 10. 5 --> 0
-		Objective: 10. 6 --> 0
-		Objective: 10. 7 --> 0
-		Objective: 10. 8 --> 0
-		Objective: 10. 9 --> 0
-		Objective: 10.10 --> 0
-		Objective: 10.11 --> 0
-		Objective: 10.12 --> 0
-		Objective: 10.13 --> 0
+		Objective: 3. 1 --> 0
+		Objective: 3. 2 --> 0
+		Objective: 3. 3 --> 0
+		Objective: 3. 4 --> 0
+		Objective: 3. 5 --> 0
+		Objective: 3. 6 --> 0
+		Objective: 3. 7 --> 0
+		Objective: 3. 8 --> 0
+		Objective: 3. 9 --> 0
+		Objective: 3.10 --> 0
+		Objective: 3.11 --> 0
+		Objective: 3.12 --> 0
+		Objective: 3.13 --> 0
 
  Total Questions Missed  : 0
  =======================================================================================================
-Creating file '.\Mod_10\Output_Files/Review Mod 9 3.txt' and saving .....
+Creating file '.\Output_Files/Review Mod 9 3.txt' and saving .....
 VERBOSE: TEXT File saved correctly.
 Succesful!
-Creating file '.\Mod_10\Output_Files/Review Mod 9 3.csv' and saving .....
-VERBOSE: CSV File saved correctly.
-Succesful!
-Creating file '.\Mod_10\Output_Files/Review Mod 9 3.xlsx' and saving .....
-
-"# Missed" ,0,"Student Name: Review Mod 9 3"
-
-0,,"1.   M10 Obj01",
-0,,"2.   M10 Obj02",
-0,,"3.   M10 Obj03",
-0,,"4.   M10 Obj04",
-0,,"5.   M10 Obj05",
-0,,"6.   M10 Obj06",
-0,,"7.   M10 Obj07",
-0,,"8.   M10 Obj08",
-0,,"9.   M10 Obj09",
-0,,"10.  M10 Obj10",
-0,,"11.  M10 Obj11",
-0,,"12.  ",
-0,,"13.  ",
+Creating file '.\Output_Files/Review Mod 9 3.xlsx' and saving .....
+VERBOSE: Worksheet 'Sheet1' already existed.
+DEBUG: DataTypeName is 'PSCustomObject' isDataTypeValueType 'False'
+VERBOSE: Cell '1:1' add header '# Missed'
+VERBOSE: Cell '1:2' add header '0'
+VERBOSE: Cell '1:3' add header 'Student Name: Review Mod 9 3'
+DEBUG: Data Range 'A1:C14'
+VERBOSE: Auto-sized columns
+VERBOSE: Worksheet 'Sheet1' already existed.
+DEBUG: Data Range 'A1:C131'
+VERBOSE: Saved workbook D:\projects\TestParser\ETC-Test-Parser\TestParser\Output_Files\Review Mod 9 3.xlsx
 VERBOSE: Excel File saved correctly.
 Succesful!
 VERBOSE: Checking for common count errors due to bad parsing.
+D:\projects\TestParser\ETC-Test-Parser\TestParser\testParser.ps1 : 42 of questions expected but parsed 35 Questions!
+    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,testParser.ps1
+D:\projects\TestParser\ETC-Test-Parser\TestParser\testParser.ps1 : 42 of questions expected but parsed 35 Questions!
+    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,testParser.ps1
+
 DEBUG: Done with review9_3.htm
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
+DEBUG: Processing D:\projects\TestParser\ETC-Test-Parser\TestParser\Html_Files\reviewMod3_1.htm
+VERBOSE: Creating tally array:
+VERBOSE: 13 sized arrry set to : 0 0 0 0 0 0 0 0 0 0 0 0 0
+VERBOSE: Getting file .\Html_Files/reviewMod3_1.htm :
+VERBOSE: Processing a question
+VERBOSE: 68 -->		Found the name:  Review Mod 3 1
+VERBOSE: 75-->		End of question:  0 of 1 :  Lines = 73
+VERBOSE: Question is INCORRECT.
+VERBOSE: 115-->		End of question:  1 of 2 :  Lines = 39
+VERBOSE: 165-->		End of question:  1 of 3 :  Lines = 49
+VERBOSE: 206-->		End of question:  1 of 4 :  Lines = 40
+VERBOSE: 245-->		End of question:  1 of 5 :  Lines = 38
+VERBOSE: 285-->		End of question:  1 of 6 :  Lines = 39
+VERBOSE: 325-->		End of question:  1 of 7 :  Lines = 39
+VERBOSE: Question is INCORRECT.
+VERBOSE: 366-->		End of question:  2 of 8 :  Lines = 40
+VERBOSE: 407-->		End of question:  2 of 9 :  Lines = 40
+VERBOSE: 447-->		End of question:  2 of 10 :  Lines = 39
+VERBOSE: 483-->		End of question:  2 of 11 :  Lines = 35
+VERBOSE: Question is INCORRECT.
+VERBOSE: 523-->		End of question:  3 of 12 :  Lines = 39
+VERBOSE: 565-->		End of question:  3 of 13 :  Lines = 41
+VERBOSE: 601-->		End of question:  3 of 14 :  Lines = 35
+VERBOSE: 643-->		End of question:  3 of 15 :  Lines = 41
+VERBOSE: Question is INCORRECT.
+VERBOSE: 683-->		End of question:  4 of 16 :  Lines = 39
+VERBOSE: 723-->		End of question:  4 of 17 :  Lines = 39
+VERBOSE: 774-->		End of question:  4 of 18 :  Lines = 50
+VERBOSE: Question is INCORRECT.
+VERBOSE: 817-->		End of question:  5 of 19 :  Lines = 42
+VERBOSE: 858-->		End of question:  5 of 20 :  Lines = 40
+VERBOSE: 898-->		End of question:  5 of 21 :  Lines = 39
+VERBOSE: 936-->		End of question:  5 of 22 :  Lines = 37
+VERBOSE: Question is INCORRECT.
+VERBOSE: 980-->		End of question:  6 of 23 :  Lines = 43
+VERBOSE: 1022-->		End of question:  6 of 24 :  Lines = 41
+VERBOSE: 1058-->		End of question:  6 of 25 :  Lines = 35
+VERBOSE: 1097-->		End of question:  6 of 26 :  Lines = 38
+VERBOSE: 1135-->		End of question:  6 of 27 :  Lines = 37
+VERBOSE: Question is INCORRECT.
+VERBOSE: 1170-->		End of question:  7 of 28 :  Lines = 34
+VERBOSE: Question is INCORRECT.
+VERBOSE: 1206-->		End of question:  8 of 29 :  Lines = 35
+VERBOSE: Question is INCORRECT.
+VERBOSE: 1245-->		End of question:  9 of 30 :  Lines = 38
+VERBOSE: 1287-->		End of question:  9 of 31 :  Lines = 41
+VERBOSE: 1327-->		End of question:  9 of 32 :  Lines = 39
+VERBOSE: 1367-->		End of question:  9 of 33 :  Lines = 39
+VERBOSE: 1407-->		End of question:  9 of 34 :  Lines = 39
+VERBOSE: Question is INCORRECT.
+VERBOSE: 1447-->		End of question:  10 of 35 :  Lines = 39
+VERBOSE: Question is INCORRECT.
+VERBOSE: 1485-->		End of question:  11 of 36 :  Lines = 37
+VERBOSE: 1527-->		End of question:  11 of 37 :  Lines = 41
+VERBOSE: 1571-->		End of question:  11 of 38 :  Lines = 43
+VERBOSE: 1607-->		End of question:  11 of 39 :  Lines = 35
+VERBOSE: 1649-->		End of question:  11 of 40 :  Lines = 41
+VERBOSE: 1691-->		End of question:  11 of 41 :  Lines = 41
+VERBOSE: 1732-->		End of question:  11 of 42 :  Lines = 40
+VERBOSE: Found all the questions, exiting loop
+VERBOSE: Total Lines parsed: 1732
+VERBOSE: Total Questions parsed: 42
+VERBOSE: Total Questions wrong: 11
+DEBUG: Done with parshing reviewMod3_1.htm now building output strings
+
+    To Ensure correct operations, ensure 'Total Questions Parsed' and 'Total Questions Missed' match ETC.
+    If they do not match, there is a parsing issues.  Please report this error, along with the which
+    student it incorrectly parsed.  Thank you, Brion.
+
+
+
+Test Parsed for Review Mod 3 1 
+=======================================================================================================
+Incorrect Questions     :  11
+Grade                   :  74
+Total Questions Parsed  :  42 (42 expected)
+=======================================================================================================
+		Objective: 3. 1 --> 3
+		Objective: 3. 2 --> 0
+		Objective: 3. 3 --> 0
+		Objective: 3. 4 --> 0
+		Objective: 3. 5 --> 1
+		Objective: 3. 6 --> 1
+		Objective: 3. 7 --> 1
+		Objective: 3. 8 --> 0
+		Objective: 3. 9 --> 1
+		Objective: 3.10 --> 2
+		Objective: 3.11 --> 1
+		Objective: 3.12 --> 0
+		Objective: 3.13 --> 1
+
+ Total Questions Missed  : 11
+ =======================================================================================================
+Creating file '.\Output_Files/Review Mod 3 1.txt' and saving .....
+VERBOSE: TEXT File saved correctly.
+Succesful!
+Creating file '.\Output_Files/Review Mod 3 1.xlsx' and saving .....
+VERBOSE: Worksheet 'Sheet1' already existed.
+DEBUG: DataTypeName is 'PSCustomObject' isDataTypeValueType 'False'
+VERBOSE: Cell '1:1' add header '# Missed'
+VERBOSE: Cell '1:2' add header '11'
+VERBOSE: Cell '1:3' add header 'Student Name: Review Mod 3 1'
+DEBUG: Data Range 'A1:C14'
+VERBOSE: Auto-sized columns
+VERBOSE: Worksheet 'Sheet1' already existed.
+DEBUG: Data Range 'A1:C131'
+VERBOSE: Saved workbook D:\projects\TestParser\ETC-Test-Parser\TestParser\Output_Files\Review Mod 3 1.xlsx
+VERBOSE: Excel File saved correctly.
+Succesful!
+VERBOSE: Checking for common count errors due to bad parsing.
+DEBUG: Done with reviewMod3_1.htm
+DEBUG: Processing D:\projects\TestParser\ETC-Test-Parser\TestParser\Html_Files\reviewMod3_2.htm
+VERBOSE: Creating tally array:
+VERBOSE: 13 sized arrry set to : 0 0 0 0 0 0 0 0 0 0 0 0 0
+VERBOSE: Getting file .\Html_Files/reviewMod3_2.htm :
+VERBOSE: Processing a question
+VERBOSE: 68 -->		Found the name:  Review Mod 3 2
+VERBOSE: 71-->		End of question:  0 of 1 :  Lines = 69
+VERBOSE: 108-->		End of question:  0 of 2 :  Lines = 36
+VERBOSE: 147-->		End of question:  0 of 3 :  Lines = 38
+VERBOSE: 197-->		End of question:  0 of 4 :  Lines = 49
+VERBOSE: 241-->		End of question:  0 of 5 :  Lines = 43
+VERBOSE: 281-->		End of question:  0 of 6 :  Lines = 39
+VERBOSE: 323-->		End of question:  0 of 7 :  Lines = 41
+VERBOSE: Question is INCORRECT.
+VERBOSE: 363-->		End of question:  1 of 8 :  Lines = 39
+VERBOSE: 403-->		End of question:  1 of 9 :  Lines = 39
+VERBOSE: 448-->		End of question:  1 of 10 :  Lines = 44
+VERBOSE: 491-->		End of question:  1 of 11 :  Lines = 42
+VERBOSE: 531-->		End of question:  1 of 12 :  Lines = 39
+VERBOSE: 571-->		End of question:  1 of 13 :  Lines = 39
+VERBOSE: Question is INCORRECT.
+VERBOSE: 607-->		End of question:  2 of 14 :  Lines = 35
+VERBOSE: 646-->		End of question:  2 of 15 :  Lines = 38
+VERBOSE: 682-->		End of question:  2 of 16 :  Lines = 35
+VERBOSE: 723-->		End of question:  2 of 17 :  Lines = 40
+VERBOSE: Question is INCORRECT.
+VERBOSE: 764-->		End of question:  3 of 18 :  Lines = 40
+VERBOSE: 806-->		End of question:  3 of 19 :  Lines = 41
+VERBOSE: Question is INCORRECT.
+VERBOSE: 849-->		End of question:  4 of 20 :  Lines = 42
+VERBOSE: 889-->		End of question:  4 of 21 :  Lines = 39
+VERBOSE: 929-->		End of question:  4 of 22 :  Lines = 39
+VERBOSE: Question is INCORRECT.
+VERBOSE: 980-->		End of question:  5 of 23 :  Lines = 50
+VERBOSE: 1025-->		End of question:  5 of 24 :  Lines = 44
+VERBOSE: Question is INCORRECT.
+VERBOSE: 1066-->		End of question:  6 of 25 :  Lines = 40
+VERBOSE: 1106-->		End of question:  6 of 26 :  Lines = 39
+VERBOSE: 1142-->		End of question:  6 of 27 :  Lines = 35
+VERBOSE: Question is INCORRECT.
+VERBOSE: 1186-->		End of question:  7 of 28 :  Lines = 43
+VERBOSE: 1233-->		End of question:  7 of 29 :  Lines = 46
+VERBOSE: Question is INCORRECT.
+VERBOSE: 1271-->		End of question:  8 of 30 :  Lines = 37
+VERBOSE: 1306-->		End of question:  8 of 31 :  Lines = 34
+VERBOSE: 1345-->		End of question:  8 of 32 :  Lines = 38
+VERBOSE: 1386-->		End of question:  8 of 33 :  Lines = 40
+VERBOSE: 1426-->		End of question:  8 of 34 :  Lines = 39
+VERBOSE: 1466-->		End of question:  8 of 35 :  Lines = 39
+VERBOSE: 1506-->		End of question:  8 of 36 :  Lines = 39
+VERBOSE: Question is INCORRECT.
+VERBOSE: 1544-->		End of question:  9 of 37 :  Lines = 37
+VERBOSE: 1580-->		End of question:  9 of 38 :  Lines = 35
+VERBOSE: 1619-->		End of question:  9 of 39 :  Lines = 38
+VERBOSE: 1655-->		End of question:  9 of 40 :  Lines = 35
+VERBOSE: Question is INCORRECT.
+VERBOSE: 1695-->		End of question:  10 of 41 :  Lines = 39
+VERBOSE: 1735-->		End of question:  10 of 42 :  Lines = 39
+VERBOSE: Found all the questions, exiting loop
+VERBOSE: Total Lines parsed: 1735
+VERBOSE: Total Questions parsed: 42
+VERBOSE: Total Questions wrong: 10
+DEBUG: Done with parshing reviewMod3_2.htm now building output strings
+
+    To Ensure correct operations, ensure 'Total Questions Parsed' and 'Total Questions Missed' match ETC.
+    If they do not match, there is a parsing issues.  Please report this error, along with the which
+    student it incorrectly parsed.  Thank you, Brion.
+
+
+
+Test Parsed for Review Mod 3 2 
+=======================================================================================================
+Incorrect Questions     :  10
+Grade                   :  76
+Total Questions Parsed  :  42 (42 expected)
+=======================================================================================================
+		Objective: 3. 1 --> 2
+		Objective: 3. 2 --> 0
+		Objective: 3. 3 --> 0
+		Objective: 3. 4 --> 1
+		Objective: 3. 5 --> 0
+		Objective: 3. 6 --> 1
+		Objective: 3. 7 --> 0
+		Objective: 3. 8 --> 1
+		Objective: 3. 9 --> 1
+		Objective: 3.10 --> 1
+		Objective: 3.11 --> 1
+		Objective: 3.12 --> 0
+		Objective: 3.13 --> 2
+
+ Total Questions Missed  : 10
+ =======================================================================================================
+Creating file '.\Output_Files/Review Mod 3 2.txt' and saving .....
+VERBOSE: TEXT File saved correctly.
+Succesful!
+Creating file '.\Output_Files/Review Mod 3 2.xlsx' and saving .....
+VERBOSE: Worksheet 'Sheet1' already existed.
+DEBUG: DataTypeName is 'PSCustomObject' isDataTypeValueType 'False'
+VERBOSE: Cell '1:1' add header '# Missed'
+VERBOSE: Cell '1:2' add header '10'
+VERBOSE: Cell '1:3' add header 'Student Name: Review Mod 3 2'
+DEBUG: Data Range 'A1:C14'
+VERBOSE: Auto-sized columns
+VERBOSE: Worksheet 'Sheet1' already existed.
+DEBUG: Data Range 'A1:C131'
+VERBOSE: Saved workbook D:\projects\TestParser\ETC-Test-Parser\TestParser\Output_Files\Review Mod 3 2.xlsx
+VERBOSE: Excel File saved correctly.
+Succesful!
+VERBOSE: Checking for common count errors due to bad parsing.
+DEBUG: Done with reviewMod3_2.htm
+DEBUG: Processing D:\projects\TestParser\ETC-Test-Parser\TestParser\Html_Files\reviewMod3_3.html
+VERBOSE: Creating tally array:
+VERBOSE: 13 sized arrry set to : 0 0 0 0 0 0 0 0 0 0 0 0 0
+VERBOSE: Getting file .\Html_Files/reviewMod3_3.html :
+VERBOSE: Processing a question
+VERBOSE: 68 -->		Found the name:  Review Mod 3 3
+VERBOSE: 75-->		End of question:  0 of 1 :  Lines = 73
+VERBOSE: Question is INCORRECT.
+VERBOSE: 115-->		End of question:  1 of 2 :  Lines = 39
+VERBOSE: 155-->		End of question:  1 of 3 :  Lines = 39
+VERBOSE: 195-->		End of question:  1 of 4 :  Lines = 39
+VERBOSE: Question is INCORRECT.
+VERBOSE: 235-->		End of question:  2 of 5 :  Lines = 39
+VERBOSE: Question is INCORRECT.
+VERBOSE: 271-->		End of question:  3 of 6 :  Lines = 35
+VERBOSE: Question is INCORRECT.
+VERBOSE: 310-->		End of question:  4 of 7 :  Lines = 38
+VERBOSE: 350-->		End of question:  4 of 8 :  Lines = 39
+VERBOSE: Question is INCORRECT.
+VERBOSE: 390-->		End of question:  5 of 9 :  Lines = 39
+VERBOSE: 433-->		End of question:  5 of 10 :  Lines = 42
+VERBOSE: 475-->		End of question:  5 of 11 :  Lines = 41
+VERBOSE: Question is INCORRECT.
+VERBOSE: 518-->		End of question:  6 of 12 :  Lines = 42
+VERBOSE: Question is INCORRECT.
+VERBOSE: 555-->		End of question:  7 of 13 :  Lines = 36
+VERBOSE: Question is INCORRECT.
+VERBOSE: 605-->		End of question:  8 of 14 :  Lines = 49
+VERBOSE: 643-->		End of question:  8 of 15 :  Lines = 37
+VERBOSE: 682-->		End of question:  8 of 16 :  Lines = 38
+VERBOSE: 724-->		End of question:  8 of 17 :  Lines = 41
+VERBOSE: Question is INCORRECT.
+VERBOSE: 762-->		End of question:  9 of 18 :  Lines = 37
+VERBOSE: 801-->		End of question:  9 of 19 :  Lines = 38
+VERBOSE: 841-->		End of question:  9 of 20 :  Lines = 39
+VERBOSE: 889-->		End of question:  9 of 21 :  Lines = 47
+VERBOSE: 931-->		End of question:  9 of 22 :  Lines = 41
+VERBOSE: 971-->		End of question:  9 of 23 :  Lines = 39
+VERBOSE: 1014-->		End of question:  9 of 24 :  Lines = 42
+VERBOSE: 1054-->		End of question:  9 of 25 :  Lines = 39
+VERBOSE: Question is INCORRECT.
+VERBOSE: 1094-->		End of question:  10 of 26 :  Lines = 39
+VERBOSE: 1135-->		End of question:  10 of 27 :  Lines = 40
+VERBOSE: 1172-->		End of question:  10 of 28 :  Lines = 36
+VERBOSE: Question is INCORRECT.
+VERBOSE: 1207-->		End of question:  11 of 29 :  Lines = 34
+VERBOSE: 1257-->		End of question:  11 of 30 :  Lines = 49
+VERBOSE: 1306-->		End of question:  11 of 31 :  Lines = 48
+VERBOSE: 1350-->		End of question:  11 of 32 :  Lines = 43
+VERBOSE: 1388-->		End of question:  11 of 33 :  Lines = 37
+VERBOSE: 1427-->		End of question:  11 of 34 :  Lines = 38
+VERBOSE: 1467-->		End of question:  11 of 35 :  Lines = 39
+VERBOSE: 1508-->		End of question:  11 of 36 :  Lines = 40
+VERBOSE: Question is INCORRECT.
+VERBOSE: 1546-->		End of question:  12 of 37 :  Lines = 37
+VERBOSE: Question is INCORRECT.
+VERBOSE: 1586-->		End of question:  13 of 38 :  Lines = 39
+VERBOSE: Question is INCORRECT.
+VERBOSE: 1627-->		End of question:  14 of 39 :  Lines = 40
+VERBOSE: 1665-->		End of question:  14 of 40 :  Lines = 37
+VERBOSE: Question is INCORRECT.
+VERBOSE: 1705-->		End of question:  15 of 41 :  Lines = 39
+VERBOSE: Question is INCORRECT.
+VERBOSE: 1746-->		End of question:  16 of 42 :  Lines = 40
+VERBOSE: Found all the questions, exiting loop
+VERBOSE: Total Lines parsed: 1746
+VERBOSE: Total Questions parsed: 42
+VERBOSE: Total Questions wrong: 16
+DEBUG: Done with parshing reviewMod3_3.html now building output strings
+
+    To Ensure correct operations, ensure 'Total Questions Parsed' and 'Total Questions Missed' match ETC.
+    If they do not match, there is a parsing issues.  Please report this error, along with the which
+    student it incorrectly parsed.  Thank you, Brion.
+
+
+
+Test Parsed for Review Mod 3 3 
+=======================================================================================================
+Incorrect Questions     :  16
+Grade                   :  62
+Total Questions Parsed  :  42 (42 expected)
+=======================================================================================================
+		Objective: 3. 1 --> 3
+		Objective: 3. 2 --> 1
+		Objective: 3. 3 --> 0
+		Objective: 3. 4 --> 2
+		Objective: 3. 5 --> 2
+		Objective: 3. 6 --> 1
+		Objective: 3. 7 --> 0
+		Objective: 3. 8 --> 0
+		Objective: 3. 9 --> 1
+		Objective: 3.10 --> 2
+		Objective: 3.11 --> 2
+		Objective: 3.12 --> 1
+		Objective: 3.13 --> 1
+
+ Total Questions Missed  : 16
+ =======================================================================================================
+Creating file '.\Output_Files/Review Mod 3 3.txt' and saving .....
+VERBOSE: TEXT File saved correctly.
+Succesful!
+Creating file '.\Output_Files/Review Mod 3 3.xlsx' and saving .....
+VERBOSE: Worksheet 'Sheet1' already existed.
+DEBUG: DataTypeName is 'PSCustomObject' isDataTypeValueType 'False'
+VERBOSE: Cell '1:1' add header '# Missed'
+VERBOSE: Cell '1:2' add header '16'
+VERBOSE: Cell '1:3' add header 'Student Name: Review Mod 3 3'
+DEBUG: Data Range 'A1:C14'
+VERBOSE: Auto-sized columns
+VERBOSE: Worksheet 'Sheet1' already existed.
+DEBUG: Data Range 'A1:C131'
+VERBOSE: Saved workbook D:\projects\TestParser\ETC-Test-Parser\TestParser\Output_Files\Review Mod 3 3.xlsx
+VERBOSE: Excel File saved correctly.
+Succesful!
+VERBOSE: Checking for common count errors due to bad parsing.
+DEBUG: Done with reviewMod3_3.html
 DEBUG: Program done!
-Confirm
-Continue with this operation?
-&Yes  Yes to &All  &Halt Command  &Suspend
-Y
 
 **********************
 Windows PowerShell transcript end
-End time: 20240409121207
+End time: 20240414021326
 **********************
