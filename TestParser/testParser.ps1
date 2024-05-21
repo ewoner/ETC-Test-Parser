@@ -1,13 +1,22 @@
 ﻿
 <#
     Author:  Brion Lang
-    Version:  v0.1.0-dev.3
+    Version:  v0.1.0-dev.4
 
-    versioning specification : https://semver.org/
+    Versioning specification : https://semver.org/
 
-    Discription:  This program will read in a file give in the hardcoded varaibles, and parse the number of questions wrong and print a report to the screen.
+    Discription:  This program will read in a number of HTML test report files from ETC and parse the number of questions wrong and compile reports based on the parseing.  Current works with both even if the HTML review document only shows the missed questions.
 
     See Github repositoty at : https://github.com/ewoner/ETC-Test-Parser for more complete discription, current updates and future plans.
+
+
+Version Dev4 Change Log:
+1.  Added support for questions that do not parse the objective number.  After flaging the question wrong with a bad parse, it will hopefully give the "objective" string to the user to and type in the objective's number to continue.
+2.  Added a variabvle to hold the "incorrect answer" regex string. ($IncorrectQuestionRegexStr)
+3.  Critical Errors will pause before continuing..... maybe.
+4.  Questions that have a ERROR parsing will be added to a "0" objective number.  Only if the question is incorrect and the objective could not be determined, the output files will reflect as such and not effect the tallies of the other objectives or questions catagoires.
+5.  A Text file summary of all parsed files is now created.
+6.  Indiviual CSV output was removed, now all their variables/code has been deleted.
 #>
 
 <#
@@ -25,6 +34,7 @@ TODO:  Rename variables to better self document
 
 
 #>
+
 clear-host
 
 #Creates a log file from this run.
@@ -47,6 +57,7 @@ while ( $True ) {
 		write-host "Invalid response MUST be either '3' or '10'" -foreground "RED" 
 	}
 }
+$IncorrectQuestionRegexStr = '<div class="state">Incorrect</div>' # regex used to find if the question is incorrect
 #=======================================================================================================
 #Read Configuration File
 #=======================================================================================================
@@ -58,7 +69,7 @@ Write-Debug "Loading from configuration file"
 files due to special cases.  #>
 $htmlDirStr = ".\Html_Files"
 $saveDirStr = ".\Output_Files"  # Should be the directory were remediation files are stored.  Next version???
-$objRegexPattern = "Objective[s:\W]+(\d+)\.(\d+)\.?(\d+)?" # Default for Mod 3/ 10 hopefully all mods....
+$objRegexPattern = "Objective[s:\W]+(\d+)[-\.](\d+)[-\.]?(\d+)?" # Default for Mod 3/ 10 hopefully all mods....
 # nameRegexPattern is from the ETC HTML and should be universial.
 $nameRegexPattern = 'class=""\s*>((\w+[\. ]*){2,})<\/a><\/td><\/tr><tr><th class="cell" scope="row">Started on' #default from ETC HTML
 $endOfQuestionRegexPattern = "<thead>"
@@ -167,17 +178,29 @@ Write-Verbose ('$objOutputStr' + " is $objOutputStr")
 write-debug "Getting files...."
 $filesToParseObjs = get-childItem -Path "$htmlDirStr" -Filter "*.htm*"
 Write-verbose "$filesToParseObjs to process...."
+$comboOutputFileStr = ""
 
+if ( -not (test-path -path "./saveDirStr") ) {
+	new-item -path "./saveDirStr" -ItemType Directory
+} else {
+	Remove-Item -path "./$saveDirStr/*.*" -force 
+}
+if ( -not (test-path -path "./saveDirStr/Student_Files") ) {
+	new-item -path "./saveDirStr" -ItemType Directory
+}
 foreach ( $fileParsingObj in $filesToParseObjs ){
     Write-debug "Processing $($fileParsingObj.fullName)"
     $objTallies = @()                        #Array to hold number of missed questions by objective, note SIZE == $numOfObj above
+	$objTotals = @()						# Array to hold the number of each objective on the test.
     $missedQuestions = @()                         #Matches to missed questions
     write-verbose "Creating tally array: "
     #Set up array to hold number of questions wrong, index by (objective# -1)
-    for ( $index = 0; $index -lt $numOfObj; $index += 1 ) {
+    for ( $index = 0; $index -le $numOfObj; $index += 1 ) {
         $objTallies += 0;
+		$objTotals += 0;
     }
     Write-verbose "$($objTallies.count) sized arrry set to : $($objTallies)"
+	Write-verbose "$($objTotals.count) sized arrry set to : $($objTotals)"
     #=======================================================================================================
     #Per File to parse....
     #=======================================================================================================
@@ -192,6 +215,7 @@ foreach ( $fileParsingObj in $filesToParseObjs ){
     }
     catch {
         Write-Error "Error opening the file $fileParsingObj for reading.\nProgram exiting."
+		pause
         return 1
     }
     Write-verbose "Processing a question"
@@ -200,9 +224,10 @@ foreach ( $fileParsingObj in $filesToParseObjs ){
 	$numOfFoundQuestions = 0 # used for debugging
     #read in each line and parse it into a question....
     foreach ( $line in $htmlFileContent) {
+		$objNum = 0
 		$line = $line.replace(""+[char]194,"").replace("&nbsp;"," ")
         $fileLineCount += 1
-        #Write-Debug "Line: $fileLineCount"
+        # Write-Information "Line: $fileLineCount" -InformationAction Continue
         # Uses the HTML code to find the student's name based on the $nameRegexPattern
         if ($foundName -eq $false -and ($line | select-string -pattern $nameRegexPattern -quiet) ) {
             $questionStr += $line
@@ -213,16 +238,36 @@ foreach ( $fileParsingObj in $filesToParseObjs ){
         }
         # End of the question currently pasring
         elseif ( $line -match $endOfQuestionRegexPattern ) {
-            $numOfFoundQuestions += 1
-            
-			$IncorrectQuestion = $questionStr | Select-String -pattern '<div class="state">Incorrect</div>' -Quiet
-           # Quesiton is incorrect; save the html for now, and update objectives missed etc
-           if ( $IncorrectQuestion ) {
+			Write-verbose "$fileLineCount-->`t`tEnd of question:  $($missedQuestions.count) of $numOfFoundQuestions :  Lines = $questionLineCount"
+			$numOfFoundQuestions += 1
+			$IncorrectQuestion = $questionStr | Select-String -pattern $IncorrectQuestionRegexStr -Quiet
+			write-verbose "`$IncorrectQuestion is $IncorrectQuestion"
+			$objStr = $questionStr | select-string -pattern $objRegexPattern
+			try {
+				$objNum = [int]($objStr.Matches[0].groups[2].value)  #Capture Group 2 -- Objective number
+			}
+			catch {
+				write-verbose "Could not find an objective number..."
+				if ( $IncorrectQuestion ) {
+					write-Error "Did not pasre an objective number."
+					write-verbose "$fileLineCount -- '$($questionStr | select-string -pattern "General Feedback")'"
+					write-host "`nIf the Objective number can not be made out, please enter 0.`nThis will be flagged in the output files and not effect the tallies of any other questions.`n`n"
+					write-host -foreground blue -background yellow ($questionStr | Select-string -pattern "\b(Objective[:\W]+(\w+[, ]*)+)\b").matches[0].groups[1]
+					write-host "`n"
+					$objNum = [int](Read-host "Enter correct Objective Number or '0'")
+				}
+				else {
+					write-Error "Did not pasre an objective number."
+					write-verbose "$fileLineCount -- '$($questionStr | select-string -pattern "General Feedback")'"
+				}					
+			}
+			$objTotals[ $objNum ] += 1;
+			# Write-Information "Objective Totals : $objTotals ->$(($objTotals | Measure-Object -Sum).Sum)`nObjective Tallies: $objTallies ->$(($objTallies | Measure-Object -Sum).Sum)`n" -InformationAction Continue
+			# Quesiton is incorrect; save the html for now, and update objectives missed etc
+			if ( $IncorrectQuestion ) {
                 Write-verbose "Question is INCORRECT."
                 $missedQuestions += $questionStr
-                $objStr = $questionStr | select-string -pattern $objRegexPattern
-                $objNum = [int]($objStr.Matches[0].groups[2].value)  #Capture Group 2 -- Objective number
-                $objTallies[ $objNum-1 ] += 1;
+                $objTallies[ $objNum ] += 1;
                 # check if this is the wrong mod and move to next file if true
                 if ( [int]($objStr.Matches[0].groups[1].value) -ne $modNumber ) {
                     write-debug "$modNumber found!!!!!!!!!!!!!!!!!!"
@@ -230,7 +275,6 @@ foreach ( $fileParsingObj in $filesToParseObjs ){
                     break;
                 }
 			}
-			Write-verbose "$fileLineCount-->`t`tEnd of question:  $($missedQuestions.count) of $numOfFoundQuestions :  Lines = $questionLineCount"
 			$questionStr = ""
             $questionLineCount = 0
         }
@@ -253,12 +297,12 @@ foreach ( $fileParsingObj in $filesToParseObjs ){
         $wrongMod = $false
         continue
     }
-
-	# Build the output string
+<######################################################################################
+Build the output
+#######################################################################################>
 	write-debug "Done with parshing $fileParsingObj now building output strings"
 	$excelStr = '"# Missed" ,' + ($missedQuestions.count) + ',"Student Name: ' + $nameStr + '"' + "`n`n"
 	$outputStr = "";  #output string to a text file.
-    $csvStr = "";  #output string for csv file
     $disclaimerStr = "
     To Ensure correct operations, ensure 'Total Questions Parsed' and 'Total Questions Missed' match ETC.
     If they do not match, there is a parsing issues.  Please report this error, along with the which
@@ -276,11 +320,9 @@ Total Questions Parsed  :  $numOfFoundQuestions ($maxNumOfQuestions expected)
     $outputStr += $disclaimerStr + "`n"
 
     $outputStr += $outputHeaderStr + "`n"
-    $csvStr += "$nameStr`n"
-    $curObjNum = 1;
-    $totalnumOfMissedQuestions = 0
-    foreach ( $objTally in $objTallies ) {
-        $totalnumOfMissedQuestions +=  $objTally;
+    $curObjNum = 0;
+    $totalnumOfMissedQuestions = ($objTallies | Measure-Object -sum).Sum;  # if there is an object that did not parse correctly...
+    foreach ( $objTally in $objTallies ){
         # The checkbox for missed objectives!
         if ( $objTally -eq 0 ) {
             $wingDingChar = 168
@@ -289,74 +331,102 @@ Total Questions Parsed  :  $numOfFoundQuestions ($maxNumOfQuestions expected)
             $wingDingChar = 254
         }
         if ( $curObjNum -gt 9 ) {
-            $outputStr += "$objOutputStr$modNumber.$curObjNum --> $objTally`n"
-            $csvStr += "$objTally`n"
+            $outputStr += "$objOutputStr$modNumber.$curObjNum `t--> $objTally`n"
 			$excelStr += [string]$objTally + ','+[char]$wingDingChar+',"' + $curObjNum + ".  " + $objectiveStrings[$curObjNum-1] + '",'+"`n"
         }
-        else {
-            $outputStr += "$objOutputStr$modNumber. $curObjNum --> $objTally`n"
-            $csvStr += "$objTally`n"
+		elseif ( $curObjNum -eq 0 -and $ObjTally -ne 0 ) {
+			$outputStr += "`t`tNo Objective Parsed `t--> $objTally`n"
+			$outputStr += "`t`t-----------------------------------`n"
+			$excelStr += [string]$objTally + ',' + [char]$wingDingChar + ',"' + $curObjNum + ".  " + "Cound not Pasre" + '",' + "`n"
+		}
+        elseif ( $curObjNum -gt 0 ) {
+            $outputStr += "$objOutputStr$modNumber. $curObjNum `t--> $objTally`n"
 			$excelStr += [string]$objTally + ','+[char]$wingDingChar+',"' + $curObjNum + ".   " + $objectiveStrings[$curObjNum-1] + '",'+"`n"
         }
         $curObjNum += 1;
     }
 	$outputFooterStr = "
- Total Questions Missed  : $($missedQuestions.count)
- ======================================================================================================="
+Total Questions Missed  : $($missedQuestions.count)
+======================================================================================================="
     $outputStr += $outputFooterStr
 
     # sending to console and file, overrighting old information!
-    write-host $outputStr
+    if ( $objTallies[0] -gt 0 ) {
+		write-host $outputStr -background DarkRed
+	}
+	else {
+		write-host $outputStr
+	}
+	
     try {
-        Write-host "Creating file '$saveDirStr/$namestr.txt' and saving ..... " -nonewline
-        new-item -Path $saveDirStr -Name "$nameStr.txt" -Force 1> $null
-        Set-Content -Path "$saveDirStr/$namestr.txt" -Value $outputStr
+        Write-host "Creating file '$saveDirStr/Student_Files/$namestr.txt' and saving ..... " -nonewline
+        new-item -Path $saveDirStr/Student_Files -Name "$nameStr.txt" -Force 1> $null
+        Set-Content -Path "$saveDirStr/Student_Files/$namestr.txt" -Value $outputStr
         write-verbose "TEXT File saved correctly."
         write-host "Succesful!"
+		$comboOutputFileStr += $outputStr + "`n=======================================================================================================`n=======================================================================================================`n`n"
     }
     catch {
-        write-Host "Error!"
+        write-Debug ("Error!" + "- $error[0]`n`n`n")
         Write-Error "Unknown error while trying to save file: $saveDirStr/$namestr.txt"
+		pause
     }
-# Section below removed due to Excel output.
-<#    try {
-        Write-host "Creating file '$saveDirStr/$namestr.csv' and saving ..... " -nonewline
-        new-item -Path $saveDirStr -Name "$nameStr.csv" -Force 1> $null
-        Set-Content -Path "$saveDirStr/$namestr.csv" -Value $csvstr
-        write-verbose "CSV File saved correctly."
-        write-host "Succesful!"
-    }
-    catch {
-        write-Host "Error!"
-        Write-Error "Unknown error while trying to save file: $saveDirStr/$namestr.csv"
-    }
-#>
 	try {
-        Write-host "Creating file '$saveDirStr/$namestr.xlsx' and saving ..... " -nonewline
-        $excel = ( (ConvertFrom-Csv $excelStr) | export-Excel "$saveDirStr/$namestr.xlsx"  -autosize -PassThru )
+        Write-host "Creating file '$saveDirStr/Student_Files/$namestr.xlsx' and saving ..... " #-nonewline
+        $excel = ( (ConvertFrom-Csv $excelStr ) | export-Excel -path "./$saveDirStr/Student_Files/$namestr.xlsx"  -worksheetname $namestr -autosize -PassThru )
         $Range = "B2:B$($numOfObj+1)"
-        Set-excelRange -range $range  -Worksheet $excel.sheet1 -FontName "wingdings"
-        Set-ExcelRange -range "A1:B$($numOfObj+1)" -Worksheet $excel.Sheet1 -HorizontalAlignment Center
+        Set-excelRange -range $range  -Worksheet $excel.$namestr -FontName "wingdings"
+        Set-ExcelRange -range "A1:B$($numOfObj+1)" -Worksheet $excel.$namestr -HorizontalAlignment Center
         Export-Excel -ExcelPackage $excel
         write-verbose "Excel File saved correctly."
         write-host "Succesful!"
     }
     catch {
-        write-Host "Error!"
+        write-Debug ("Error!" + "- $error[0]`n`n`n")
         Write-Error "Unknown error while trying to save file: $saveDirStr/$namestr.xlsx"
+		pause
     }
-
+	try {
+		Write-host "Updating '$saveDirStr/Test_summary.xlsx' and saving ..... " -nonewline
+		$sourceExcel = Open-ExcelPackage -path "./$saveDirStr/Student_Files/$namestr.xlsx"
+		copy-excelWorksheet -sourceobject $sourceExcel -sourceworksheet $namestr -destinationworkbook "./$saveDirStr/Test_Summary.xlsx" -destinationworksheet $namestr
+		write-verbose "Excel File appended correctly."
+		write-host "Succesful!"
+	}
+	catch {
+		write-Debug ("Error!" + "- $error[0]`n`n`n")
+        Write-Error "Unknown error while trying to save to file: $saveDirStr/Test_Summary.xlsx"
+		pause
+	}
     
     #Checking for Errors Will Robinson!
     Write-verbose "Checking for common count errors due to bad parsing."
     if ( $maxNumOfQuestions -ne $numOfFoundQuestions ) {
         Write-Error "$maxNumOfQuestions of questions expected but parsed $numOfFoundQuestions Questions!"
+		pause
     }
     if ( $totalnumOfMissedQuestions -ne $missedQuestions.count ) {
         Write-Error "$totalnumOfMissedQuestions missed questions by objectives but parsed $($missedQuestions.count) Questions!"
+		pause
     }
 	write-debug "Done with $fileParsingObj"
 }
+<#################################################################################
+Combined output files
+##################################################################################>
+try {
+        Write-host "`n`n`nCreating file '$saveDirStr/Test_Summary.txt' and saving ..... " -nonewline
+        new-item -Path $saveDirStr -Name "Test_Summary.txt" -Force 1> $null
+        Set-Content -Path "$saveDirStr/Test_Summary.txt" -Value $comboOutputFileStr
+        write-verbose "TEXT File saved correctly."
+        write-host "Succesful!"
+}
+catch {
+        write-Host "Error!"
+        Write-Error "Unknown error while trying to save file: $saveDirStr/Test_Summary.txt"
+		pause
+}
+
 Write-Debug "Program done!"
 read-host "`n`nProgram Finished.  Please hit Enter to Exit"
 
