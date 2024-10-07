@@ -1,4 +1,50 @@
-﻿function Read-ClassNumber {
+<#
+.SYNOPSIS
+Prompts the user to enter a class number and validates it against existing directories.
+
+.DESCRIPTION
+This function prompts the user for a class number, validates its length and format, 
+and checks for corresponding directories in the specified path. 
+Handles special cases for "None" and "99999".
+
+.VERSION
+1.0.0
+
+.AUTHOR
+Brion Lang
+
+.NOTES
+Versioning specification: https://semver.org/
+See GitHub repository at: https://github.com/ewoner/ETC-Test-Parser for more complete description, current updates, and future plans.
+
+.PARAMETER DirectoryPath
+The path where class directories are stored.
+
+.EXAMPLE
+Read-ClassNumber -DirectoryPath "S:\Student\"
+
+.INPUTS
+[System.String] $DirectoryPath
+The path where class directories are stored.
+
+.OUTPUTS
+[System.String]
+The validated class number or special value.
+
+.FUNCTIONALITY
+ClassNumberReader
+
+.LINK
+https://github.com/ewoner/ETC-Test-Parser
+
+.COMPONENT
+ClassNumberReader
+
+.ROLE
+ClassNumberReader
+#>
+
+function Read-ClassNumber {
     [CmdletBinding()]
     param (
         [string]$DirectoryPath = 's:\Student\'  # Default path where class directories are stored

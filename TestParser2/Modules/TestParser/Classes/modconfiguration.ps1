@@ -1,37 +1,58 @@
 <#
 .SYNOPSIS
-    TestParser2.ps1
+    Processes ETC test data and generates Excel reports based on students' scores.
+
 .DESCRIPTION
     This script processes ETC test data and generates Excel reports based on students' scores. For each student who failed the test, it creates a separate Excel sheet detailing the missed areas by module objective and a remediation sheet for distribution.
+
 .VERSION
-    2.0.0-dev2
+    1.0.0
+
 .AUTHOR
     Brion Lang
+
 .NOTES
     Versioning specification: https://semver.org/
     See GitHub repository at: https://github.com/ewoner/ETC-Test-Parser for more complete description, current updates, and future plans.
-    File Version: 1.1.0-dev2-2024-09-06
+
 .PARAMETER debugParser
     Specifies the debugging level for the script. Options are "off", "on", or "full". Default is "off".
+
 .PARAMETER devParser
     Specifies the development environment. Options are "off", "home", or "work". Default is "off".
-.CHANGELOG
-    2024-08-15 - Version 1.0.0-dev1
-        - Initial release with basic functionality.
-    2024-09-06 - Version 2..0-dev2
-		- Added SaveFileName data field.
-		- Added the getfileName() method
-        - Added the getfilename([string]) method.
+
+.EXAMPLE
+    # Example usage of the script would go here
+
+.INPUTS
+    System.Management.Automation.PSObject
+    The question object to process.
+
+.OUTPUTS
+    System.Int32
+    The objective number of the question.
+
+.FUNCTIONALITY
+    TestParser
+
+.LINK
+    https://github.com/ewoner/ETC-Test-Parser
+
+.COMPONENT
+    TestParser
+
+.ROLE
+    TestParser
 
 #>
 
 class ModConfiguration {
     [int] $Mod
-	[int] $objModNum
+    [int] $objModNum
     [string] $Title
     [string] $HtmlDirStr
     [string] $SaveDirStr
-	[String] $saveFileName
+    [string] $saveFileName
     [string] $logDirStr
     [string] $ObjRegexPattern
     [int] $NumOfObj
@@ -42,7 +63,7 @@ class ModConfiguration {
     # Default constructor
     ModConfiguration() {
         $this.Mod = 0
-		$this.objModNum = $this.Mod
+        $this.objModNum = $this.Mod
         $this.Title = "Undefined"
         $this.HtmlDirStr = "Undefined"
         $this.SaveDirStr = "."
@@ -52,7 +73,7 @@ class ModConfiguration {
         $this.NumOfDays = 0
         $this.MaxNumOfQuestions = 0
         $this.Objectives = @()
-		$this.saveFileName = "save.data"
+        $this.saveFileName = "save.data"
     }
 
     # Dynamic constructor using hashtable
@@ -60,7 +81,7 @@ class ModConfiguration {
         # Set default values for all properties
         $defaultValues = @{
             Mod = 0
-			ObjModNum = $this.Mod
+            ObjModNum = $this.Mod
             Title = "Undefined"
             HtmlDirStr = "Undefined"
             SaveDirStr = "Undefined"
@@ -108,9 +129,10 @@ class ModConfiguration {
             }
         }
     }
-	[string] getFileName([string] $classNumber ) {
-		return "Mod $($this.Mod) Remediation $classNumber.xlsx"
-	}
+    
+    [string] getFileName([string] $classNumber) {
+        return "Mod $($this.Mod) Remediation $classNumber.xlsx"
+    }
 
     # Method to set ObjRegexPattern with validation
     [void] SetObjRegexPattern([string] $value) {

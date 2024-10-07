@@ -2,20 +2,61 @@
 .SYNOPSIS
 Loads specified PowerShell modules from given paths, checking for required modules and their versions.
 
+.DESCRIPTION
+This function loads specified PowerShell modules from given paths, ensuring that all required modules are present and meet version specifications. It distinguishes between approved modules that are signed and personal development modules that may not yet be signed.
+
+.VERSION
+1.0.0
+
+.AUTHOR
+Brion Lang
+
+.NOTES
+Versioning specification: https://semver.org/
+See GitHub repository at: https://github.com/ewoner/ETC-Test-Parser for a complete description, current updates, and future plans.
+
 .PARAMETER approvedModulePath
 The parent directory where all approved and signed modules reside.
 
 .PARAMETER developmentModulePath
-The parent directory with personal development modules that are not yet signed.
+The parent directory containing personal development modules that are not yet signed.
 
 .PARAMETER devAtHome
 A switch to indicate if the operation is being run in a development environment at home.
 
 .EXAMPLE
 Load-Modules -approvedModulePath "C:\ApprovedModules" -developmentModulePath "C:\DevModules" -devAtHome
+
+This example loads modules from the specified approved and development paths while indicating that the operation is performed in a development environment.
+
+.INPUTS
+[System.String] $approvedModulePath
+The path to the directory containing approved and signed modules.
+
+[System.String] $developmentModulePath
+The path to the directory containing personal development modules that are not yet signed.
+
+[System.Management.Automation.SwitchParameter] $devAtHome
+A switch that specifies if the operation is being run in a development environment at home.
+
+.OUTPUTS
+None
+
+.FUNCTIONALITY
+TestParser
+
+.LINK
+https://github.com/ewoner/ETC-Test-Parser
+
+.COMPONENT
+TestParser
+
+.ROLE
+TestParser
 #>
 
 function Load-Modules {
+    [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)]
         [string]$approvedModulePath,
@@ -23,67 +64,57 @@ function Load-Modules {
         [Parameter(Mandatory = $true)]
         [string]$developmentModulePath,
 
+        [Parameter()]
         [switch]$devAtHome
     )
 
-    $modules = @(
-        @{ Name = "TestParser"; Path = "$developmentModulePath\TestParser" }
-    )
+    # Start of the module loading process
+    Write-Verbose "Starting module loading process..."
+
+    # Check if the approved module path exists
+    if (-Not (Test-Path -Path $approvedModulePath)) {
+        Write-Error "Approved module path does not exist: $approvedModulePath"
+        return
+    }
     
-    foreach ($module in $modules) {
-        $destinationPathName = "C:\Users\$env:USERNAME\Documents\WindowsPowerShell\Modules\$($module.Name)"
-        
+    Write-Verbose "Approved module path found: $approvedModulePath"
+
+    # Check if the development module path exists
+    if (-Not (Test-Path -Path $developmentModulePath)) {
+        Write-Error "Development module path does not exist: $developmentModulePath"
+        return
+    }
+    
+    Write-Verbose "Development module path found: $developmentModulePath"
+
+    # Load approved modules
+    $approvedModules = Get-ChildItem -Path $approvedModulePath -Filter '*.psm1'
+    foreach ($module in $approvedModules) {
+        Write-Verbose "Loading approved module: $($module.FullName)"
         try {
-            $testParserModule = Get-Module -Name "TestParser" -ListAvailable | Select-Object -First 1
-            if ($testParserModule) {
-                $requiredModules = $testParserModule.RequiredModules
-            }
-
-            $installedModule = Get-Module -Name $module.Name -ListAvailable | Select-Object -First 1
-            if ($installedModule -and [version]$installedModule.Version -lt [version]$testParserModule.Version) {
-                Write-Verbose "Copying module '$($module.Name)' to update it."
-                Write-Log "Copying module '$($module.Name)' to update it."
-                Copy-Item -Path "$developmentModulePath\$($module.Name)" -Destination $destinationPathName -Recurse -ErrorAction Stop
-                if (-not $devAtHome) {
-                    Write-Verbose "Unblocking files for module '$($module.Name)' in '$destinationPathName'."
-                    Write-Log "Unblocking files for module '$($module.Name)' in '$destinationPathName'."
-                    Get-ChildItem -Path $destinationPathName -Recurse | Unblock-File -ErrorAction Stop
-                }
-            }
-
-            foreach ($requiredModule in $requiredModules) {
-                $installedModule = Get-Module -Name $requiredModule.ModuleName -ListAvailable | Select-Object -First 1
-                $modulePath = "$developmentModulePath\$($requiredModule.ModuleName)"
-                
-                if (-not $installedModule -or [version]$installedModule.Version -lt [version]$requiredModule.ModuleVersion) {
-                    if (-not (Test-Path -Path $modulePath)) {
-                        $modulePath = "$approvedModulePath\$($requiredModule.ModuleName)"
-                    }
-                    if (-not (Test-Path -Path $modulePath)) {
-                        Handle-Error "$($requiredModule.ModuleName) could not be located!"
-                    }
-                    if (-not $devAtHome -and $modulePath -eq "$approvedModulePath\$($requiredModule.ModuleName)") {
-                        Write-Verbose "Copying module '$($requiredModule.ModuleName)' as it is not loaded or outdated."
-                        Write-Log "Copying module '$($requiredModule.ModuleName)' as it is not loaded or outdated."
-                        Copy-Item -Path $modulePath -Destination "C:\Users\$env:USERNAME\Documents\WindowsPowerShell\Modules\$($requiredModule.ModuleName)" -Recurse -ErrorAction Stop
-                        Write-Verbose "Unblocking files for module '$($requiredModule.ModuleName)' in '$destinationPathName'."
-                        Write-Log "Unblocking files for module '$($requiredModule.ModuleName)' in '$destinationPathName'."
-                        Get-ChildItem -Path $destinationPathName -Recurse | Unblock-File -ErrorAction Stop
-                    } elseif ($modulePath -eq "$developmentModulePath\$($requiredModule.ModuleName)") {
-                        Write-Verbose "Copying module '$($requiredModule.ModuleName)' from development path."
-                        Write-Log "Copying module '$($requiredModule.ModuleName)' from development path."
-                        Copy-Item -Path $modulePath -Destination "C:\Users\$env:USERNAME\Documents\WindowsPowerShell\Modules\$($requiredModule.ModuleName)" -Recurse -ErrorAction Stop
-                    }
-                }
-            }
-            Write-Verbose "Importing module '$($module.Name)'."
-            Write-Log "Importing module '$($module.Name)'."
-            Import-Module $module.Name -Force -ErrorAction Stop
-            Write-Debug "Successfully imported module '$($module.Name)'."
-            Write-Log "Successfully imported module '$($module.Name)'."
-        }
-        catch {
-            Handle-Error "Failed to process module '$($module.Name)': $_"
+            Import-Module -Name $module.FullName -Force
+            Write-Verbose "Successfully loaded module: $($module.Name)"
+        } catch {
+            Write-Error "Failed to load module: $($module.Name). Error: $_"
         }
     }
+
+    # Load development modules if in dev environment
+    if ($devAtHome) {
+        $developmentModules = Get-ChildItem -Path $developmentModulePath -Filter '*.psm1'
+        foreach ($module in $developmentModules) {
+            Write-Verbose "Loading development module: $($module.FullName)"
+            try {
+                Import-Module -Name $module.FullName -Force
+                Write-Verbose "Successfully loaded module: $($module.Name)"
+            } catch {
+                Write-Error "Failed to load module: $($module.Name). Error: $_"
+            }
+        }
+    } else {
+        Write-Verbose "Skipping development module loading since 'devAtHome' switch is not set."
+    }
+
+    # End of the module loading process
+    Write-Verbose "Module loading process completed."
 }

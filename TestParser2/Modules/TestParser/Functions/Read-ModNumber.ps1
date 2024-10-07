@@ -1,4 +1,50 @@
-﻿function Read-ModNumber {
+﻿<#
+.SYNOPSIS
+Prompts the user to select a valid module number from configuration files.
+
+.DESCRIPTION
+This function retrieves a list of valid module numbers from configuration files 
+in the specified directory and prompts the user to select one. 
+Handles input validation and displays available options.
+
+.VERSION
+1.0.0
+
+.AUTHOR
+Brion Lang
+
+.NOTES
+Versioning specification: https://semver.org/
+See GitHub repository at: https://github.com/ewoner/ETC-Test-Parser for more complete description, current updates, and future plans.
+
+.PARAMETER ConfigDirectoryPath
+The path where module configuration files are stored.
+
+.EXAMPLE
+Read-ModNumber -ConfigDirectoryPath "S:\Config"
+
+.INPUTS
+[System.String] $ConfigDirectoryPath
+The path where module configuration files are stored.
+
+.OUTPUTS
+[System.Int32]
+The selected valid module number.
+
+.FUNCTIONALITY
+ModuleNumberReader
+
+.LINK
+https://github.com/ewoner/ETC-Test-Parser
+
+.COMPONENT
+ModuleNumberReader
+
+.ROLE
+ModuleNumberReader
+#>
+
+function Read-ModNumber {
     [CmdletBinding()]
     param (
         [string]$ConfigDirectoryPath = $(Join-Path -Path (Split-Path -Parent $PSScriptRoot) -ChildPath 'Config')  # Default path where module configuration files are stored
