@@ -46,6 +46,11 @@
 
 #>
 
+<#
+.SYNOPSIS
+    Represents the configuration for a module in the test processing system.
+#>
+
 class ModConfiguration {
     [int] $Mod
     [int] $objModNum
@@ -62,6 +67,7 @@ class ModConfiguration {
 
     # Default constructor
     ModConfiguration() {
+        Write-Verbose "Initializing ModConfiguration with default values."
         $this.Mod = 0
         $this.objModNum = $this.Mod
         $this.Title = "Undefined"
@@ -74,10 +80,13 @@ class ModConfiguration {
         $this.MaxNumOfQuestions = 0
         $this.Objectives = @()
         $this.saveFileName = "save.data"
+        Write-Verbose "Default values set."
     }
 
     # Dynamic constructor using hashtable
     ModConfiguration([Hashtable]$properties) {
+        Write-Verbose "Initializing ModConfiguration with provided properties."
+
         # Set default values for all properties
         $defaultValues = @{
             Mod = 0
@@ -95,6 +104,7 @@ class ModConfiguration {
         # Set default values
         foreach ($property in $defaultValues.Keys) {
             $this."$property" = $defaultValues[$property]
+            Write-Debug "Set default property: $property = $($defaultValues[$property])"
         }
 
         # Iterate over the hashtable and set properties dynamically
@@ -104,6 +114,7 @@ class ModConfiguration {
             # Check if the property exists on the class
             if ($this.PSObject.Properties.Name -contains $key) {
                 $property = $this.PSObject.Properties[$key]
+                Write-Debug "Processing property: $key with value: $value"
 
                 # Set the property value, and handle type conversion if necessary
                 try {
@@ -120,7 +131,9 @@ class ModConfiguration {
                     # Validate regex pattern
                     if ($key -eq 'ObjRegexPattern') {
                         [regex]::new($this.ObjRegexPattern) | Out-Null
+                        Write-Debug "Set regex pattern: $this.ObjRegexPattern"
                     }
+                    Write-Verbose "Successfully set property: $key to value: $($this."$key")"
                 } catch {
                     Write-Error "Error setting property '$key' with value '$value': $_"
                 }
@@ -131,6 +144,7 @@ class ModConfiguration {
     }
     
     [string] getFileName([string] $classNumber) {
+        Write-Verbose "Generating file name for class number: $classNumber"
         return "Mod $($this.Mod) Remediation $classNumber.xlsx"
     }
 
@@ -143,6 +157,7 @@ class ModConfiguration {
         try {
             [regex]::new($value) | Out-Null  # Test the regex pattern
             $this.ObjRegexPattern = $value    # Set the value if it's valid
+            Write-Verbose "Successfully set ObjRegexPattern to: $value"
         } catch {
             Write-Error "Invalid regex pattern: $value. Maintaining old value."
         }

@@ -1,0 +1,310 @@
+1. Safety/Hazards  
+1.1 Personnel and Equipment Safety  
+1.1.1 Electric Shock  
+1.1.2 Electrostatic Discharge (ESD)  
+1.2 Training Time Out  
+1.3 Safety/Hazard Reporting  
+1.4 Basic First Aid  
+2. Course Administration  
+2.1 Policies and Regulations  
+2.1.1 Conduct  
+2.1.2 Sexual Harassment  
+2.1.3 Fraternization  
+2.1.4 Cheating  
+2.1.5 Physical Readiness Training (PRT)/Physical Training (PT)  
+2.1.6 Fire/Evacuation Drills  
+2.1.7 Student Parking  
+2.2 Responsibilities  
+2.2.1 Field Day  
+2.2.2 Base Enlisted Quarters (BEQ) Occupants  
+3. JCAC-extended Training Collection (eTC)  
+3.1 JCAC-eTC Activity Completion  
+3.2 Authorized Headphones  
+4. Joint Cyber Analysis Course (JCAC)  
+4.1 Course Materials  
+4.2 Training Day  
+4.3 Mandatory/Voluntary Study  
+4.4 Laboratory Exercises  
+4.5 Evaluation Methods  
+4.6 Academic Review Board (ARB)  
+4.7 Critiques  
+4.8 Maximizing Student Comprehension  
+4.8.1 Laws of Adult Learning  
+4.8.2 Sensory Learning Types  
+4.8.3 Methods of Learning  
+4.8.4 Study Techniques  
+4.9 American Council on Education (ACE) Accreditation  
+5. Understanding the Threat  
+6. Information Environment  
+
+<BELOW IS TESTABLE.....>
+7. Cybersecurity  
+8. Information Security (INFOSEC) Program  
+8.1 Safeguarding Sensitive and Classified Information  
+8.1.1 Sensitive Information  
+8.1.2 Levels of Classified Information  
+8.1.3 Sensitive Compartmented Information (SCI)  
+8.2 SCI Indoctrination  
+8.2.1 Unauthorized Disclosure  
+8.2.2 Espionage  
+8.3 Sensitive Compartmented Information Facility (SCIF)  
+8.3.1 SCIF Operating Procedures  
+8.3.2 Safeguarding SCI Material  
+8.3.3 End of Day Security Checks  
+8.3.4 Security Guards  
+8.4 Purpose of Classification  
+8.4.1 Classification Markings  
+8.4.2 Dissemination Control Markings  
+8.4.3 SCI Control System Markings  
+8.4.4 Special Access Program (SAP) Markings  
+8.4.5 Marking Format  
+8.4.6 Derivative Classification  
+8.4.7 Information System Media Classification/Handling  
+8.4.8 Spillage  
+8.4.9 Handling Classified Data on the Internet  
+8.5 Transporting Classified Materials  
+8.6 Destroying Classified Materials  
+8.6.1 Methods of Destruction  
+8.6.2 Emergency Destruction Procedures  
+8.6.3 Priorities for Emergency Destruction  
+8.6.4 Emergency Destruction Phases  
+9. Information Systems Security  
+9.1 Information System Responsibilities  
+9.2 Cookies  
+9.3 Malicious Code  
+9.4 Unauthorized Software  
+9.5 Home Computer Security  
+9.6 Removable Media  
+9.7 Mobile Computing and Personal Electronic Devices (PEDs)  
+9.8 Wireless Technology  
+9.9 Traveling  
+9.10 Computer Security Events  
+9.11 Network Access Security  
+9.11.1 Physical Security  
+9.11.2 Account/Password Protection  
+9.11.3 Protecting a CAC/PIV  
+9.11.4 Personally Identifiable Information (PII)  
+9.11.5 End of Day Procedures  
+10. Operational Security (OPSEC) and Situational Awareness  
+10.1 OPSEC and the Five-Step Planning Process  
+10.1.1 Apply OPSEC and Situational Awareness  
+10.1.2 Social Engineering  
+10.1.3 Identity Theft Protection  
+10.1.4 Insider Threat Awareness  
+10.1.5 Social Networking  
+10.1.6 Guarding Online Privacy  
+10.1.7 Protecting the Organization  
+10.1.8 Ethical Online Behavior  
+10.2 Cyber Threats  
+10.2.1 Email Security and Use  
+10.2.2 Internet Hoaxes  
+10.2.3 Phishing  
+10.2.4 Smishing  
+10.2.5 Vishing  
+10.2.6 Spear Phishing  
+10.2.7 Whaling  
+11. National Intelligence Effort  
+11.1 Intelligence Oversight  
+11.1.1 Executive Order (EO) 12333  
+11.1.2 DoD Manual 5240.01  
+11.1.3 NSA/CSS Policy 12-2  
+11.1.4 Title 10, U.S. Code, Armed Forces  
+11.1.5 Title 14, U.S. Code, Coast Guard  
+11.1.6 Title 32, U.S. Code, National Guard  
+11.1.7 Title 50, U.S. Code, War and National Defense  
+11.1.8 National Security Directive 42 (NSD-42)  
+11.2 The Intelligence Cycle  
+11.2.1 Planning and Direction  
+11.2.2 Collection  
+11.2.3 Processing and Exploitation  
+11.2.4 Analysis and Production  
+11.2.5 Dissemination  
+11.2.6 Evaluation and Feedback  
+11.3 Critical Information (CRITIC)  
+12. Intelligence Community (IC)  
+12.1 Director of National Intelligence (DNI)  
+12.2 Army  
+12.3 Navy  
+12.4 Marine Corps  
+12.5 Air Force  
+12.6 Space Force  
+12.7 Coast Guard  
+12.8 Drug Enforcement Agency (DEA) Intelligence Program  
+12.9 Department of Energy (DOE) Office of Intelligence and Counterintelligence  
+12.10 Department of Homeland Security (DHS) Office of Intelligence and Analysis (I&A)  
+12.11 Department of State (DOS) Bureau of Intelligence and Research (INR)  
+12.12 Department of Treasury Office of Intelligence and Analysis (OIA)  
+12.13 Central Intelligence Agency (CIA)  
+12.14 Defense Intelligence Agency (DIA)  
+12.15 Federal Bureau of Investigation (FBI)  
+12.16 National Geospatial-Intelligence Agency (NGA)  
+12.17 National Reconnaissance Office (NRO)  
+12.18 National Security Agency (NSA)  
+12.18.1 The Central Security Service (CSS)  
+12.18.2 The U.S. Cryptologic System (USCS)  
+12.18.3 The United States Signals Intelligence System (USSS)  
+12.18.4 Second and Third-Party Partners  
+13. Military Organization  
+14. Combatant Commands (CCMDs)  
+14.1 Geographic Commands  
+14.1.1 US Central Command (USCENTCOM)  
+14.1.2 U.S. Indo-Pacific Command (USINDOPACOM)  
+14.1.3 U.S. European Command (USEUCOM)  
+14.1.4 U.S. Africa Command (USAFRICOM)  
+14.1.5 US Southern Command (USSOUTHCOM)  
+14.1.6 US Northern Command (USNORTHCOM)  
+14.1.7 US Space Command (USSPACECOM)  
+14.2 Functional Commands  
+14.2.1 US Strategic Command (USSTRATCOM)  
+14.2.2 US Special Operations Command (USSOCOM)  
+14.2.3 US Transportation Command (USTRANSCOM)  
+14.2.4 US Cyber Command (USCYBERCOM)  
+
+
+Safety/Hazards  
+Personnel and Equipment Safety  
+Personnel and Equipment Safety - Electric Shock  
+Personnel and Equipment Safety - Electrostatic Discharge (ESD)  
+Training Time Out  
+Safety/Hazard Reporting  
+Basic First Aid  
+Course Administration  
+Policies and Regulations  
+Policies and Regulations - Conduct  
+Policies and Regulations - Sexual Harassment  
+Policies and Regulations - Fraternization  
+Policies and Regulations - Cheating  
+Policies and Regulations - Physical Readiness Training (PRT)/Physical Training (PT)  
+Policies and Regulations - Fire/Evacuation Drills  
+Policies and Regulations - Student Parking  
+Responsibilities  
+Responsibilities - Field Day  
+Responsibilities - Base Enlisted Quarters (BEQ) Occupants  
+JCAC-extended Training Collection (eTC)  
+JCAC-extended Training Collection (eTC) - JCAC-eTC Activity Completion  
+JCAC-extended Training Collection (eTC) - Authorized Headphones  
+Joint Cyber Analysis Course (JCAC)  
+Joint Cyber Analysis Course (JCAC) - Course Materials  
+Joint Cyber Analysis Course (JCAC) - Training Day  
+Joint Cyber Analysis Course (JCAC) - Mandatory/Voluntary Study  
+Joint Cyber Analysis Course (JCAC) - Laboratory Exercises  
+Joint Cyber Analysis Course (JCAC) - Evaluation Methods  
+Joint Cyber Analysis Course (JCAC) - Academic Review Board (ARB)  
+Joint Cyber Analysis Course (JCAC) - Critiques  
+Joint Cyber Analysis Course (JCAC) - Maximizing Student Comprehension  
+Joint Cyber Analysis Course (JCAC) - Maximizing Student Comprehension - Laws of Adult Learning  
+Joint Cyber Analysis Course (JCAC) - Maximizing Student Comprehension - Sensory Learning Types  
+Joint Cyber Analysis Course (JCAC) - Maximizing Student Comprehension - Methods of Learning  
+Joint Cyber Analysis Course (JCAC) - Maximizing Student Comprehension - Study Techniques  
+Joint Cyber Analysis Course (JCAC) - American Council on Education (ACE) Accreditation  
+Understanding the Threat  
+Information Environment  
+Cybersecurity  
+Information Security (INFOSEC) Program  
+Information Security (INFOSEC) Program - Safeguarding Sensitive and Classified Information  
+Information Security (INFOSEC) Program - Safeguarding Sensitive and Classified Information - Sensitive Information  
+Information Security (INFOSEC) Program - Safeguarding Sensitive and Classified Information - Levels of Classified Information  
+Information Security (INFOSEC) Program - Safeguarding Sensitive and Classified Information - Sensitive Compartmented Information (SCI)  
+Information Security (INFOSEC) Program - SCI Indoctrination  
+Information Security (INFOSEC) Program - SCI Indoctrination - Unauthorized Disclosure  
+Information Security (INFOSEC) Program - SCI Indoctrination - Espionage  
+Information Security (INFOSEC) Program - Sensitive Compartmented Information Facility (SCIF)  
+Information Security (INFOSEC) Program - Sensitive Compartmented Information Facility (SCIF) - SCIF Operating Procedures  
+Information Security (INFOSEC) Program - Sensitive Compartmented Information Facility (SCIF) - Safeguarding SCI Material  
+Information Security (INFOSEC) Program - Sensitive Compartmented Information Facility (SCIF) - End of Day Security Checks  
+Information Security (INFOSEC) Program - Sensitive Compartmented Information Facility (SCIF) - Security Guards  
+Information Security (INFOSEC) Program - Purpose of Classification  
+Information Security (INFOSEC) Program - Purpose of Classification - Classification Markings  
+Information Security (INFOSEC) Program - Purpose of Classification - Dissemination Control Markings  
+Information Security (INFOSEC) Program - Purpose of Classification - SCI Control System Markings  
+Information Security (INFOSEC) Program - Purpose of Classification - Special Access Program (SAP) Markings  
+Information Security (INFOSEC) Program - Purpose of Classification - Marking Format  
+Information Security (INFOSEC) Program - Purpose of Classification - Derivative Classification  
+Information Security (INFOSEC) Program - Purpose of Classification - Information System Media Classification/Handling  
+Information Security (INFOSEC) Program - Purpose of Classification - Spillage  
+Information Security (INFOSEC) Program - Purpose of Classification - Handling Classified Data on the Internet  
+Information Security (INFOSEC) Program - Transporting Classified Materials  
+Information Security (INFOSEC) Program - Destroying Classified Materials  
+Information Security (INFOSEC) Program - Destroying Classified Materials - Methods of Destruction  
+Information Security (INFOSEC) Program - Destroying Classified Materials - Emergency Destruction Procedures  
+Information Security (INFOSEC) Program - Destroying Classified Materials - Priorities for Emergency Destruction  
+Information Security (INFOSEC) Program - Destroying Classified Materials - Emergency Destruction Phases  
+Information Systems Security  
+Information Systems Security - Information System Responsibilities  
+Information Systems Security - Cookies  
+Information Systems Security - Malicious Code  
+Information Systems Security - Unauthorized Software  
+Information Systems Security - Home Computer Security  
+Information Systems Security - Removable Media  
+Information Systems Security - Mobile Computing and Personal Electronic Devices (PEDs)  
+Information Systems Security - Wireless Technology  
+Information Systems Security - Traveling  
+Information Systems Security - Computer Security Events  
+Information Systems Security - Network Access Security  
+Information Systems Security - Network Access Security - Physical Security  
+Information Systems Security - Network Access Security - Account/Password Protection  
+Information Systems Security - Network Access Security - Protecting a CAC/PIV  
+Information Systems Security - Network Access Security - Personally Identifiable Information (PII)  
+Information Systems Security - Network Access Security - End of Day Procedures  
+Operational Security (OPSEC) and Situational Awareness  
+Operational Security (OPSEC) and Situational Awareness - OPSEC and the Five-Step Planning Process  
+Operational Security (OPSEC) and Situational Awareness - OPSEC and the Five-Step Planning Process - Apply OPSEC and Situational Awareness  
+Operational Security (OPSEC) and Situational Awareness - OPSEC and the Five-Step Planning Process - Social Engineering  
+Operational Security (OPSEC) and Situational Awareness - OPSEC and the Five-Step Planning Process - Identity Theft Protection  
+Operational Security (OPSEC) and Situational Awareness - OPSEC and the Five-Step Planning Process - Insider Threat Awareness  
+Operational Security (OPSEC) and Situational Awareness - OPSEC and the Five-Step Planning Process - Social Networking  
+Operational Security (OPSEC) and Situational Awareness - OPSEC and the Five-Step Planning Process - Guarding Online Privacy  
+Operational Security (OPSEC) and Situational Awareness - OPSEC and the Five-Step Planning Process - Protecting the Organization  
+Operational Security (OPSEC) and Situational Awareness - OPSEC and the Five-Step Planning Process - Ethical Online Behavior  
+Operational Security (OPSEC) and Situational Awareness - Cyber Threats  
+Operational Security (OPSEC) and Situational Awareness - Cyber Threats - Email Security and Use  
+Operational Security (OPSEC) and Situational Awareness - Cyber Threats - Internet Hoaxes  
+Operational Security (OPSEC) and Situational Awareness - Cyber Threats - Phishing  
+Operational Security (OPSEC) and Situational Awareness - Cyber Threats - Smishing  
+Operational Security (OPSEC) and Situational Awareness - Cyber Threats - Vishing  
+Operational Security (OPSEC) and Situational Awareness - Cyber Threats - Spear Phishing  
+Operational Security (OPSEC) and Situational Awareness - Cyber Threats - Whaling  
+National Intelligence Effort  
+National Intelligence Effort - Intelligence Oversight  
+National Intelligence Effort - Intelligence Oversight - Executive Order (EO) 12333  
+National Intelligence Effort - Intelligence Oversight - DoD Manual 5240.01  
+National Intelligence Effort - Intelligence Oversight - NSA/CSS Policy 12-2  
+National Intelligence Effort - Intelligence Oversight - Title 10, U.S. Code, Armed Forces  
+National Intelligence Effort - Intelligence Oversight - Title 14, U.S. Code, Coast Guard  
+National Intelligence Effort - Intelligence Oversight - Title 32, U.S. Code, National Guard  
+National Intelligence Effort - Intelligence Oversight - Title 50, U.S. Code, War and National Defense  
+National Intelligence Effort - Intelligence Oversight - National Security Directive 42 (NSD-42)  
+National Intelligence Effort - The Intelligence Cycle  
+National Intelligence Effort - The Intelligence Cycle - Planning and Direction  
+National Intelligence Effort - The Intelligence Cycle - Collection  
+National Intelligence Effort - The Intelligence Cycle - Processing and Exploitation  
+National Intelligence Effort - The Intelligence Cycle - Analysis and Production  
+National Intelligence Effort - The Intelligence Cycle - Dissemination  
+National Intelligence Effort - The Intelligence Cycle - Evaluation and Feedback  
+National Intelligence Effort - Critical Information (CRITIC)  
+Intelligence Community (IC)  
+Intelligence Community (IC) - Director of National Intelligence (DNI)  
+Intelligence Community (IC) - Army  
+Intelligence Community (IC) - Navy  
+Intelligence Community (IC) - Marine Corps  
+Intelligence Community (IC) - Air Force  
+Intelligence Community (IC) - Space Force  
+Intelligence Community (IC) - Coast Guard  
+Intelligence Community (IC) - Drug Enforcement Agency (DEA) Intelligence Program  
+Intelligence Community (IC) - Department of Energy (DOE) Office of Intelligence and Counterintelligence  
+Intelligence Community (IC) - Department of Homeland Security (DHS) Office of Intelligence and Analysis (I&A)  
+Intelligence Community (IC) - Department of State (DOS) Bureau of Intelligence and Research (INR)  
+Intelligence Community (IC) - Department of Treasury Office of Intelligence and Analysis (OIA)  
+Intelligence Community (IC) - Central Intelligence Agency (CIA)  
+Intelligence Community (IC) - Defense Intelligence Agency (DIA)  
+Intelligence Community (IC) - Federal Bureau of Investigation (FBI)  
+Intelligence Community (IC) - National Geospatial-Intelligence Agency (NGA)  
+Intelligence Community (IC) - National Reconnaissance Office (NRO)  
+Intelligence Community (IC) - National Security Agency (NSA)  
+Intelligence Community (IC) - The Central Security Service (CSS)  
+Intelligence Community (IC) - The U.S. Cryptologic System (USCS)  
+Intelligence Community (IC) - The United States Signals Intelligence System (USSS)  
+Military Organization  
+Military Organization - Combatant Commands (CCMDs)  
+Military Organization - Combatant Commands (CCMDs) - Functional Commands  
+Military Organization - Combatant Commands (CCMDs) - Geographic Commands  

@@ -15,7 +15,8 @@
 #>
 
 function Get-EtcAttemptReview {
-    param(
+	[cmdletbinding()]
+	param(
         [int]$attemptid,
         [switch]$raw
     )

@@ -1,0 +1,74 @@
+Here's a checklist to help you implement the design:
+
+Objective Class
+
+    Create a new class called Objective to hold the objective data and tallies.
+    Define the properties for the Objective class:
+        ModuleNumber (int)
+        DayNumber (int, optional)
+        ObjectiveNumber (int)
+        ObjectiveString (string)
+        Tallies (int)
+    Define the methods for the Objective class:
+        IncrementTally() (increments the tallies by 1)
+
+ConfigLoader Class
+
+    Modify the ConfigLoader class to create an array of Objective objects.
+    Define a data structure (e.g. hash table or dictionary) to store the Objective objects, where the keys are the objective numbers and/or day numbers.
+    Update the ConfigLoader class to populate the data structure with the Objective objects.
+
+Get-QuestionObjective Function
+
+    Modify the Get-QuestionObjective function to return a hash table with the objective number and/or day number as keys.
+    Update the function to use the Objective class and data structure created by the ConfigLoader class.
+
+New-TestResults Function
+
+    Modify the New-TestResults function to reference the Objective objects by looking them up in the data structure.
+    Update the function to increment the tallies of the Objective objects accordingly.
+
+Configuration File Format
+
+    Define the configuration file format for daily objectives using the <DAYBREAK> tags.
+    Update the configuration file format to include the objective strings and tallies.
+
+User -Facing Aspects
+
+    Provide clear documentation and examples for the configuration file format.
+    Consider providing validation or error checking for the configuration files.
+    Ensure that the user interface is simple and intuitive.
+
+Testing and Validation
+
+    Test the new design to ensure that it works correctly.
+    Validate the configuration files to ensure that they are correctly formatted and contain the necessary information.
+
+By following this checklist, you should be able to implement the design and create a robust and reliable system for tracking objectives.-
+
+
+Here's a checklist to implement the placeholder logic into the program:
+
+Static Placeholders:
+
+    Identify static placeholders: Review the code and identify all static placeholders that need to be replaced.
+    Create a ResolvePlaceholder method: Create a method in the ModConfig class that takes a string as input and replaces all static placeholders with their corresponding values.
+    Implement placeholder replacement logic: Implement the logic to replace each static placeholder in the ResolvePlaceholder method.
+    Update getters to use ResolvePlaceholder method: Update all getters that use static placeholders to call the ResolvePlaceholder method instead of hardcoding the values.
+    Test static placeholder replacement: Test the program to ensure that static placeholders are being replaced correctly.
+
+Dynamic Placeholder ($classnumber):
+
+    Identify dynamic placeholder: Identify the dynamic placeholder $classnumber and its usage in the program.
+    Create a ClassNumber property: Create a property in the ModConfig class to store the dynamic value of $classnumber.
+    Update ResolvePlaceholder method: Update the ResolvePlaceholder method to replace the $classnumber placeholder with the value of the ClassNumber property.
+    Update getters to use ResolvePlaceholder method: Update all getters that use the $classnumber placeholder to call the ResolvePlaceholder method instead of hardcoding the value.
+    Fudge the dynamic value for now: For now, fudge the value of $classnumber by setting it to a default value or a hardcoded value.
+    Test dynamic placeholder replacement: Test the program to ensure that the dynamic placeholder is being replaced correctly.
+
+Future Work:
+
+    Add dynamic ability for $classnumber: Add the ability for the user to input the value of $classnumber dynamically.
+    Identify and implement additional dynamic placeholders: Identify any additional dynamic placeholders that need to be implemented and follow the same steps as above.
+
+By following this checklist, you should be able to implement the placeholder logic into the program and make it more flexible and maintainable.

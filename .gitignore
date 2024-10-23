@@ -1,3 +1,4 @@
 # Ignore logs folder
 logs/
 errors/
+.vscode

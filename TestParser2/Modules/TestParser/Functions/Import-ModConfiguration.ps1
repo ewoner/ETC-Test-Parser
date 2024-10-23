@@ -6,7 +6,7 @@ Imports the module configuration from a configuration file.
 This function imports the module configuration from a configuration file and returns a ModConfiguration object.
 
 .VERSION
-1.0.0
+1.1.0
 
 .AUTHOR
 Brion Lang
@@ -86,13 +86,71 @@ function Import-ModConfiguration {
 
                 if ($objectivesStart -ge "<objectives>".Length -and $objectivesEnd -ge 0) {
                     $objectivesContent = $configData.Substring($objectivesStart, $objectivesEnd - $objectivesStart).Trim()
-                    $objectivesArray = $objectivesContent -split "`r`n|`n|`r"
 
-                    # Trim each objective line
-                    $trimmedObjectives = $objectivesArray | ForEach-Object { $_.Trim() }
+					# Check if the block contains <DAYBREAK>
+					$isDailyBlock = $objectivesContent -match "<DAYBREAK>"
 
-                    $properties['objectives'] = $trimmedObjectives
-                    Write-Verbose "Loaded objectives: $($trimmedObjectives -join ', ')"
+					# Split based on line breaks; for daily blocks, this will still split objectives, including <DAYBREAK> markers
+					$objectivesArray = $objectivesContent -split "`r`n|`n|`r"
+
+
+
+
+
+
+                   # Initialize a list to hold Objective objects
+					$objectiveList = @()
+					$modNum = $ModNumber  # Assume this is the module number passed in
+
+					# Variables to track day number and objective number
+					$dayNum = 0
+					$objNum = 0
+
+					if ($isDailyBlock) {
+						foreach ($line in $objectivesArray) {
+							$trimmedLine = $line.Trim()
+
+							if ($trimmedLine -eq "<DAYBREAK>") {
+								# Increment day number when <DAYBREAK> is encountered
+								$dayNum++
+								$objNum = 0  # Reset objective number for each day
+							} elseif ($trimmedLine -ne "") {
+								# Increment objective number for each valid objective line
+								$objNum++
+
+								# Create an Objective object and add it to the list
+								$objective = [Objective]::new($modNum, $dayNum, $objNum, $trimmedLine)
+								$objectiveList += $objective
+							}
+						}
+					} else {
+						# For standard block, dayNum is always 0
+						$dayNum = 0
+						foreach ($line in $objectivesArray) {
+							$trimmedLine = $line.Trim()
+							
+							if ($trimmedLine -ne "") {
+								$objNum++
+
+								# Create an Objective object and add it to the list
+								$objective = [Objective]::new($modNum, $dayNum, $objNum, $trimmedLine)
+								$objectiveList += $objective
+							}
+						}
+					}
+
+					# Store the Objective objects in the properties hashtable
+					$properties['objectives'] = $objectiveList
+					Write-Verbose "Loaded objectives: $($objectiveList.Count) objectives parsed."
+
+
+
+
+
+
+
+
+
                 } else {
                     Write-Warning "Objectives block is missing or malformed in the configuration file: $filePath"
                 }
