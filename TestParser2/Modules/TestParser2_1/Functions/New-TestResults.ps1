@@ -69,141 +69,143 @@ Changes:
 #>
 
 function New-TestResults {
-    [CmdletBinding()]
-    param (
-        [Parameter(Mandatory = $true)]
-        [PSObject]$test,
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory = $true)]
+    [PSObject]$test,
 
-        [Parameter(Mandatory = $true)]
-        [PSObject]$student
-    )
+    [Parameter(Mandatory = $true)]
+    [PSObject]$student
+  )
 
-    # Initialize variables for processing
-    Write-Verbose "Initializing variables..."
-    $missedQuestions = 0
-    $logDir = Join-Path -Path $modConfig.LogDirStr -ChildPath 'Student_Files'
-    $nameStr = $student.fullname
-    $objectives = $modConfig.objectives
-    $numOfFoundQuestions = $modConfig.MaxNumOfQuestions
-    $modNumber = $modConfig.Mod
-    if ($modConfig.objectives[0].tallies) {
-        $objNum = $modConfig.objectives.count
-    } else {
-        $objNum = $modConfig.objectives.count - 1
+  # Initialize variables for processing
+  Write-Verbose "Initializing variables..."
+  $missedQuestions = 0
+  $logDir = Join-Path -Path $modConfig.LogDirStr -ChildPath 'Student_Files'
+  $nameStr = $student.fullname
+  $objectives = $modConfig.objectives
+  $numOfFoundQuestions = $modConfig.MaxNumOfQuestions
+  $modNumber = $modConfig.Mod
+  
+
+
+  # Reset the Tally property for each objective in the $modConfig.objectives array
+  foreach ($objective in $objectives) {
+    $objective.tallies = 0
+  }
+
+
+  # Process the test questions
+  Write-Verbose "Processing test questions..."
+  foreach ($question in $test.questions) {
+    $result = Get-QuestionObjectiveNumber -question $question
+    if ($result -is [int] ) {
+      if ( $result -eq 0 ) {
+        $objectives[0].incrementTally()
+      }
+      elseif ( $result -gt 0 ) {
+        $objectives[ $result ].incrementTally()
+      }
     }
-
-
-	# Reset the Tally property for each objective in the $modConfig.objectives array
-	foreach ($objective in $objectives) {
-		$objective.tallies = 0
-	}
-
-
-    # Process the test questions
-    Write-Verbose "Processing test questions..."
-    foreach ($question in $test.questions) {
-        $result = Get-QuestionObjectiveNumber -question $question
-		if ($result -is [int] ) {
-             if ( $result -eq 0 ) {
-				 $objectives[0].incrementTally()
-			 }
-			 elseif ( $result -gt 0 ) {
-				$objectives[ $result ].incrementTally()
-			 }
-        }
-		elseif ( $result -is [hashtable] ) {
-			# For Daily Objectives, find the correct day and objective
-			$day = $result.Day
-			$objective = $result.Objective
+    elseif ( $result -is [hashtable] ) {
+      # For Daily Objectives, find the correct day and objective
+      $day = $result.Day
+      $objective = $result.Objective
 			
-			# Assuming the objectives are organized in a way that allows direct indexing
-			$obj = $objectives | Where-Object { $_.dayNum -eq $day -and $_.objNum -eq $objective }
-			$obj.incrementTally()
-			Write-Verbose "  - ModNum: $($obj.modNum), DayNum: $($obj.dayNum), ObjNum: $($obj.objNum), ObjString: $($obj.objString), Tallies: $($obj.tallies)"
-		}
+      # Assuming the objectives are organized in a way that allows direct indexing
+      $obj = $objectives | Where-Object { $_.dayNum -eq $day -and $_.objNum -eq $objective }
+      $obj.incrementTally()
+      Write-Verbose "  - ModNum: $($obj.modNum), DayNum: $($obj.dayNum), ObjNum: $($obj.objNum), ObjString: $($obj.objString), Tallies: $($obj.tallies)"
     }
+  }
+	if ($modConfig.objectives[0].tallies) {
+    $objNum = $modConfig.objectives.count
+  }
+  else {
+    $objNum = $modConfig.objectives.count - 1
+  }
+  # Initialize the output string
+  # Calculate the sum of all tallies
+  $missedQuestions = ($modConfig.objectives | Measure-Object -Property Tallies -Sum).Sum
+  $excelStr = '"# Missed" ,' + $missedQuestions + ",`"$nameStr`"`n"   
+
+  # Prioritize and display Objective 0 if it has a tally
+  $firstObj = $objectives | Where-Object { $_.objNum -eq 0 -and $_.tallies -gt 0 }
+  if ($firstObj) {
+    $wingDingChar = if ($firstObj.tallies -eq 0) { 168 } else { 254 }
+    $excelStr += [string]$firstObj.tallies + ',' + [char]$wingDingChar + ',"' + $firstObj.modNum + ".0 - " + $firstObj.objString + '"' + "`n"
+  }
+
+  # Loop through remaining objectives and generate the Excel output
+  foreach ($obj in $objectives | Where-Object { $_.objNum -ne 0 }) {
+    $wingDingChar = if ($obj.tallies -eq 0) { 168 } else { 254 }
+
+    if ($obj.dayNum -eq 0) {
+      # For Module Objectives
+      $excelStr += [string]$obj.tallies + ',' + [char]$wingDingChar + ',"' + $obj.modNum + "." + $obj.objNum + " - " + $obj.objString + '"' + "`n"
+    }
+    else {
+      # For Daily Objectives
+      $excelStr += [string]$obj.tallies + ',' + [char]$wingDingChar + ',"' + $obj.modNum + "." + $obj.dayNum + "." + $obj.objNum + " - " + $obj.objString + '"' + "`n"
+    }
+  }
+
+
+  # Save the Excel report
+  $excel = (ConvertFrom-Csv $excelStr | Export-Excel -Path "$logDir/$nameStr.xlsx" -WorksheetName "$nameStr" -AutoSize -PassThru)
+  $ws = $excel.workbook.worksheets[1]
+
 	
-    # Initialize the output string
-	# Calculate the sum of all tallies
-	$missedQuestions = ($modConfig.objectives | Measure-Object -Property Tallies -Sum).Sum
-	$excelStr = '"# Missed" ,' + $missedQuestions + ",`"$nameStr`"`n"   
+  # Define ranges for the formatting
+  $checkBoxRange = "B2:B$($Objnum + 1)"
+  $headerRange = "A1:C1"
+  $outputRange = "A2:C$($Objnum + 1)"
+  $fullRange = "A1:C$($Objnum + 1)"
 
-	# Prioritize and display Objective 0 if it has a tally
-	$firstObj = $objectives | Where-Object { $_.objNum -eq 0 -and $_.tallies -gt 0 }
-	if ($firstObj) {
-		$wingDingChar = if ($firstObj.tallies -eq 0) { 168 } else { 254 }
-		$excelStr += [string]$firstObj.tallies + ',' + [char]$wingDingChar + ',"' + $firstObj.modNum + ".0 - " + $firstObj.objString + '"' + "`n"
-	}
-
-	# Loop through remaining objectives and generate the Excel output
-	foreach ($obj in $objectives | Where-Object { $_.objNum -ne 0 }) {
-		$wingDingChar = if ($obj.tallies -eq 0) { 168 } else { 254 }
-
-		if ($obj.dayNum -eq 0) {
-			# For Module Objectives
-			$excelStr += [string]$obj.tallies + ',' + [char]$wingDingChar + ',"' + $obj.modNum + "." + $obj.objNum + " - " + $obj.objString + '"' + "`n"
-		} else {
-			# For Daily Objectives
-			$excelStr += [string]$obj.tallies + ',' + [char]$wingDingChar + ',"' + $obj.modNum + "." + $obj.dayNum + "." + $obj.objNum + " - " + $obj.objString + '"' + "`n"
-		}
-	}
-
-
-    # Save the Excel report
-    $excel = (ConvertFrom-Csv $excelStr | Export-Excel -Path "$logDir/$nameStr.xlsx" -WorksheetName "$nameStr" -AutoSize -PassThru)
-    $ws = $excel.workbook.worksheets[1]
-
-	
-    # Define ranges for the formatting
-    $checkBoxRange = "B2:B$($Objnum + 1)"
-    $headerRange = "A1:C1"
-    $outputRange = "A2:C$($Objnum + 1)"
-    $fullRange = "A1:C$($Objnum + 1)"
-
-    # Set worksheet printer settings
-    $ws.PrinterSettings.Orientation = "Landscape"
+  # Set worksheet printer settings
+  $ws.PrinterSettings.Orientation = "Landscape"
     
-    # Set the student name in the Excel report
-    $ws.Cells["C1"].Style.Font.Bold = $true
+  # Set the student name in the Excel report
+  $ws.Cells["C1"].Style.Font.Bold = $true
     
-    # Set borders for the ranges
-    Set-ExcelRange -Range $fullRange -Worksheet $ws -BorderTop Thin
-    Set-ExcelRange -Range $fullRange -Worksheet $ws -BorderBottom Thin
-    Set-ExcelRange -Range $fullRange -Worksheet $ws -BorderRight Thin
-    Set-ExcelRange -Range $fullRange -Worksheet $ws -BorderLeft Thin
+  # Set borders for the ranges
+  Set-ExcelRange -Range $fullRange -Worksheet $ws -BorderTop Thin
+  Set-ExcelRange -Range $fullRange -Worksheet $ws -BorderBottom Thin
+  Set-ExcelRange -Range $fullRange -Worksheet $ws -BorderRight Thin
+  Set-ExcelRange -Range $fullRange -Worksheet $ws -BorderLeft Thin
 
-    Set-ExcelRange -Range $headerRange -Worksheet $ws -BorderAround Thick
-    Set-ExcelRange -Range $fullRange -Worksheet $ws -BorderAround Thick
+  Set-ExcelRange -Range $headerRange -Worksheet $ws -BorderAround Thick
+  Set-ExcelRange -Range $fullRange -Worksheet $ws -BorderAround Thick
 
-    # Adjust column formatting
-    set-ExcelColumn -Worksheet $ws -Column 3 -Width 100
-    set-ExcelColumn -Worksheet $ws -Column 1 -HorizontalAlignment Center
-    set-ExcelColumn -Worksheet $ws -Column 2 -HorizontalAlignment Center
+  # Adjust column formatting
+  set-ExcelColumn -Worksheet $ws -Column 3 -Width 100
+  set-ExcelColumn -Worksheet $ws -Column 1 -HorizontalAlignment Center
+  set-ExcelColumn -Worksheet $ws -Column 2 -HorizontalAlignment Center
         
-    # Set font styles for the worksheet
-    $excel.Workbook.Worksheets[$nameStr].Cells.Style.Font.Name = "Calibri"
-    $excel.Workbook.Worksheets[$nameStr].Cells.Style.Font.size = "12"
+  # Set font styles for the worksheet
+  $excel.Workbook.Worksheets[$nameStr].Cells.Style.Font.Name = "Calibri"
+  $excel.Workbook.Worksheets[$nameStr].Cells.Style.Font.size = "12"
         
-    # Set Wingdings font for the checkbox column (Column B)
-    $excel.Workbook.Worksheets[$nameStr].Cells[$checkBoxRange].Style.Font.Name = "Wingdings"
-    $excel.Workbook.Worksheets[$nameStr].Cells[$checkBoxRange].Style.HorizontalAlignment = 'Center'
+  # Set Wingdings font for the checkbox column (Column B)
+  $excel.Workbook.Worksheets[$nameStr].Cells[$checkBoxRange].Style.Font.Name = "Wingdings"
+  $excel.Workbook.Worksheets[$nameStr].Cells[$checkBoxRange].Style.HorizontalAlignment = 'Center'
 
-    # Export the final Excel file
-    Close-ExcelPackage $excel
-    Write-Verbose "Excel file saved successfully."
-    Write-Output "Excel file '$nameStr.xlsx' has been saved successfully."
+  # Export the final Excel file
+  Close-ExcelPackage $excel
+  Write-Verbose "Excel file saved successfully."
+  Write-Output "Excel file '$nameStr.xlsx' has been saved successfully."
 
-    # Update the existing workbook
-    Write-Verbose "Updating '$logDir/$($script:ModConfig.saveFileName)' and saving ..."
-    $sourceExcel = Open-ExcelPackage -Path "$logDir/$nameStr.xlsx"
-    Copy-ExcelWorksheet -SourceObject $sourceExcel -SourceWorksheet $nameStr -DestinationWorkbook "$logDir/$($script:ModConfig.saveFileName)" -DestinationWorksheet $nameStr
-    Write-Verbose "Update successful."
-    Write-Output "Workbook '$($script:ModConfig.saveFileName)' has been updated successfully."
+  # Update the existing workbook
+  Write-Verbose "Updating '$logDir/$($script:ModConfig.saveFileName)' and saving ..."
+  $sourceExcel = Open-ExcelPackage -Path "$logDir/$nameStr.xlsx"
+  Copy-ExcelWorksheet -SourceObject $sourceExcel -SourceWorksheet $nameStr -DestinationWorkbook "$logDir/$($script:ModConfig.saveFileName)" -DestinationWorksheet $nameStr
+  Write-Verbose "Update successful."
+  Write-Output "Workbook '$($script:ModConfig.saveFileName)' has been updated successfully."
 
-    # Copy the updated file to the save directory
-    Write-Verbose "Copying the updated file to $script:ModConfig.saveDirStr ..."
-    $destinationPath = Join-Path -Path $script:ModConfig.saveDirStr -ChildPath $script:ModConfig.saveFileName
-    Copy-Item -Path "$logDir/$($script:ModConfig.saveFileName)" -Destination $destinationPath -Force
-    Write-Verbose "File copied to $destinationPath successfully."
-    Write-Output "File '$($script:ModConfig.saveFileName)' has been copied to $destinationPath successfully."
+  # Copy the updated file to the save directory
+  Write-Verbose "Copying the updated file to $script:ModConfig.saveDirStr ..."
+  $destinationPath = Join-Path -Path $script:ModConfig.saveDirStr -ChildPath $script:ModConfig.saveFileName
+  Copy-Item -Path "$logDir/$($script:ModConfig.saveFileName)" -Destination $destinationPath -Force
+  Write-Verbose "File copied to $destinationPath successfully."
+  Write-Output "File '$($script:ModConfig.saveFileName)' has been copied to $destinationPath successfully."
 }
